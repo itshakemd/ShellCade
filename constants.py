@@ -1,5 +1,12 @@
+"""Shared constants and shape data for the terminal Tetris game."""
+
+import os
+
 WIDTH = 10
 HEIGHT = 20
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+HIGHSCORE_FILE = os.path.join(SCRIPT_DIR, "highscore.txt")
 
 # Each shape is a list of rotation states; each state is a list of (x, y) cells.
 SHAPES = {
