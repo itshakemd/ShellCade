@@ -1,5 +1,7 @@
 """The falling piece and the 7-bag randomizer."""
 
+import random
+
 from constants import SHAPES
 
 
@@ -17,3 +19,9 @@ class Piece:
         states = SHAPES[self.kind]
         shape = states[rot % len(states)]
         return [(x + cx, y + cy) for cx, cy in shape]
+
+
+def new_bag():
+    bag = list(SHAPES.keys())
+    random.shuffle(bag)
+    return bag
