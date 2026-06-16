@@ -38,6 +38,14 @@ class Game:
         self.clear_lines()
         self.spawn_next()
 
+    def move(self, dx, dy):
+        cells = self.current.cells(x=self.current.x + dx, y=self.current.y + dy)
+        if self.valid(cells):
+            self.current.x += dx
+            self.current.y += dy
+            return True
+        return False
+
     def spawn_next(self):
         self.refill_bag_if_needed()
         kind = self.next_kind if self.next_kind else self.bag.pop()
@@ -46,31 +54,3 @@ class Game:
         self.current = Piece(kind)
         if not self.valid(self.current.cells()):
             self.game_over = True
-
-    def clear_lines(self):
-        new_board = [row for row in self.board if any(c is None for c in row)]
-        cleared = HEIGHT - len(new_board)
-        for _ in range(cleared):
-            new_board.insert(0, [None] * WIDTH)
-        self.board = new_board
-        if cleared:
-            points = {1: 100, 2: 300, 3: 500, 4: 800}
-            self.score += points.get(cleared, 0) * self.level
-            self.lines += cleared
-            self.level = 1 + self.lines // 10
-
-    def valid(self, cells):
-        for x, y in cells:
-            if x < 0 or x >= WIDTH or y >= HEIGHT:
-                return False
-            if y >= 0 and self.board[y][x] is not None:
-                return False
-        return True
-
-    def move(self, dx, dy):
-        cells = self.current.cells(x=self.current.x + dx, y=self.current.y + dy)
-        if self.valid(cells):
-            self.current.x += dx
-            self.current.y += dy
-            return True
-        return False
