@@ -82,20 +82,16 @@ class Game:
                 self.current.x += dx
                 return
 
-    def rotate(self):
-        states = len(SHAPES[self.current.kind])
-        new_rot = (self.current.rot + 1) % states
-        cells = self.current.cells(rot=new_rot)
-        if self.valid(cells):
-            self.current.rot = new_rot
-            return
-        # simple wall kicks
-        for dx in (-1, 1, -2, 2):
-            kicked = self.current.cells(rot=new_rot, x=self.current.x + dx)
-            if self.valid(kicked):
-                self.current.rot = new_rot
-                self.current.x += dx
-                return
+    def hard_drop(self):
+        while self.move(0, 1):
+            self.score += 2
+        self.lock_piece()
+
+    def soft_drop(self):
+        if not self.move(0, 1):
+            self.lock_piece()
+        else:
+            self.score += 1
 
     def hard_drop(self):
         while self.move(0, 1):
@@ -107,3 +103,7 @@ class Game:
             self.lock_piece()
         else:
             self.score += 1
+
+    def gravity_tick(self):
+        if not self.move(0, 1):
+            self.lock_piece()
