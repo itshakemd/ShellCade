@@ -67,15 +67,6 @@ class Game:
             return True
         return False
 
-    def lock_piece(self):
-        for x, y in self.current.cells():
-            if y < 0:
-                self.game_over = True
-                return
-            self.board[y][x] = self.current.kind
-        self.clear_lines()
-        self.spawn_next()
-
     def clear_lines(self):
         new_board = [row for row in self.board if any(c is None for c in row)]
         cleared = HEIGHT - len(new_board)
