@@ -93,17 +93,16 @@ class Game:
         else:
             self.score += 1
 
-    def hard_drop(self):
-        while self.move(0, 1):
-            self.score += 2
-        self.lock_piece()
-
-    def soft_drop(self):
+    def gravity_tick(self):
         if not self.move(0, 1):
             self.lock_piece()
-        else:
-            self.score += 1
 
     def gravity_tick(self):
         if not self.move(0, 1):
             self.lock_piece()
+
+    def ghost_y(self):
+        gy = self.current.y
+        while self.valid(self.current.cells(y=gy + 1)):
+            gy += 1
+        return gy
