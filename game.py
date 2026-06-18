@@ -103,12 +103,6 @@ class Game:
             gy += 1
         return gy
 
-    def ghost_y(self):
-        gy = self.current.y
-        while self.valid(self.current.cells(y=gy + 1)):
-            gy += 1
-        return gy
-
     def render(self, high_score_name, high_score):
         ghost_y = self.ghost_y()
         ghost_cells = set(self.current.cells(y=ghost_y))
