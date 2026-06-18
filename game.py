@@ -97,12 +97,45 @@ class Game:
         if not self.move(0, 1):
             self.lock_piece()
 
-    def gravity_tick(self):
-        if not self.move(0, 1):
-            self.lock_piece()
+    def ghost_y(self):
+        gy = self.current.y
+        while self.valid(self.current.cells(y=gy + 1)):
+            gy += 1
+        return gy
 
     def ghost_y(self):
         gy = self.current.y
         while self.valid(self.current.cells(y=gy + 1)):
             gy += 1
         return gy
+
+    def render(self, high_score_name, high_score):
+        ghost_y = self.ghost_y()
+        ghost_cells = set(self.current.cells(y=ghost_y))
+        piece_cells = set(self.current.cells())
+
+        lines = []
+        lines.append("TETRIS".center(WIDTH * 2 + 2))
+        lines.append("+" + "-" * (WIDTH * 2) + "+")
+        for y in range(HEIGHT):
+            row = "|"
+            for x in range(WIDTH):
+                if (x, y) in piece_cells:
+                    row += "[]"
+                elif self.board[y][x] is not None:
+                    row += "[]"
+                elif (x, y) in ghost_cells:
+                    row += ".."
+                else:
+                    row += "  "
+            row += "|"
+            lines.append(row)
+        lines.append("+" + "-" * (WIDTH * 2) + "+")
+        lines.append(f"Score: {self.score}   Lines: {self.lines}   Level: {self.level}")
+        lines.append(f"Best: {high_score_name} - {high_score}")
+        nxt = self.next_kind or "?"
+        lines.append(f"Next: {nxt}")
+        if self.paused:
+            lines.append("*** PAUSED - press P to resume ***")
+        lines.append("A/D move  S soft-drop  W rotate  SPACE hard-drop  P pause  Q quit")
+        return "\n".join(lines)
