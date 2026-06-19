@@ -33,3 +33,37 @@ def read_key():
     if ch in (b"q", b"Q", b"\x1b"):
         return "ESC"
     return ""
+
+
+def get_text_input(prompt, max_len=12):
+    """Reads a line of text via msvcrt, letting the user type and backspace.
+    Returns the typed text (or a placeholder if left empty)."""
+    text = ""
+    width = WIDTH * 2 + 2
+    while True:
+        clear_screen()
+        block = "\n".join([
+            "=" * width,
+            prompt.center(width),
+            "=" * width,
+            "",
+            (text + "_").center(width),
+            "",
+            "Type your name, Enter to confirm".center(width),
+        ])
+        print_centered(block)
+
+        ch = msvcrt.getch()
+        if ch in (b"\r", b"\n"):
+            return text.strip() or "Player"
+        elif ch == b"\x08":  # backspace
+            text = text[:-1]
+        elif ch in (b"\x00", b"\xe0"):
+            msvcrt.getch()  # swallow special-key second byte
+        else:
+            try:
+                decoded = ch.decode("ascii")
+            except UnicodeDecodeError:
+                continue
+            if decoded.isprintable() and len(text) < max_len:
+                text += decoded
