@@ -61,3 +61,14 @@ def qualifies_for_leaderboard(scores, score):
         return True
     return score > scores[-1][1]
 
+
+def format_leaderboard_line(rank, name, score, width):
+    """'name .......... score', right-aligned score, name padded with dots
+    so everything lines up on one row."""
+    prefix = f"{rank}. {name} "
+    score_str = str(score)
+    dots_len = width - len(prefix) - len(score_str)
+    if dots_len < 1:
+        dots_len = 1
+        prefix = prefix[: max(0, width - len(score_str) - 1)] + " "
+    return prefix + ("." * dots_len) + score_str
