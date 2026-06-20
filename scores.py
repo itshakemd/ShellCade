@@ -49,3 +49,15 @@ def save_score(name, score):
         pass  # if we can't write (e.g. read-only folder), just skip silently
     return ranked
 
+
+def top_score(scores):
+    """Returns the (name, score) at the top of the leaderboard, or a
+    placeholder if it's empty."""
+    return scores[0] if scores else ("---", 0)
+
+
+def qualifies_for_leaderboard(scores, score):
+    if len(scores) < MAX_LEADERBOARD_ENTRIES:
+        return True
+    return score > scores[-1][1]
+
