@@ -31,3 +31,21 @@ def load_scores():
         pass
     return sorted(best.items(), key=lambda kv: kv[1], reverse=True)
 
+
+def save_score(name, score):
+    """Adds/updates an entry in the leaderboard (keeping only the highest
+    score per name), persists it, and returns the new sorted list."""
+    scores = dict(load_scores())
+    name = name.strip() or "Player"
+    if name not in scores or score > scores[name]:
+        scores[name] = score
+    ranked = sorted(scores.items(), key=lambda kv: kv[1], reverse=True)
+    ranked = ranked[:MAX_LEADERBOARD_ENTRIES]
+    try:
+        with open(HIGHSCORE_FILE, "w") as f:
+            for n, s in ranked:
+                f.write(f"{n},{s}\n")
+    except OSError:
+        pass  # if we can't write (e.g. read-only folder), just skip silently
+    return ranked
+
