@@ -42,3 +42,23 @@ def show_menu(high_score_name, high_score):
         elif key == "ESC":
             return "Quit"
 
+
+def show_high_score_screen(scores):
+    clear_screen()
+    width = max(WIDTH * 2 + 2, 28)
+    lines = [
+        "=" * width,
+        "LEADERBOARD".center(width),
+        "=" * width,
+        "",
+    ]
+    if not scores:
+        lines.append("No scores yet".center(width))
+    else:
+        for i, (name, score) in enumerate(scores, start=1):
+            lines.append(format_leaderboard_line(i, name, score, width))
+    lines.append("")
+    lines.append("Press any key to go back".center(width))
+    print_centered("\n".join(lines))
+    msvcrt.getch()
+
