@@ -62,3 +62,23 @@ def show_high_score_screen(scores):
     print_centered("\n".join(lines))
     msvcrt.getch()
 
+
+def show_instructions_screen():
+    clear_screen()
+    block = "\n".join([
+        "INSTRUCTIONS",
+        "-" * 40,
+        "A / D       - move piece left / right",
+        "S           - soft drop",
+        "W or Up     - rotate piece",
+        "SPACE       - hard drop",
+        "P           - pause / resume",
+        "Q           - quit to menu",
+        "",
+        "Clear horizontal lines to score points.",
+        "Speed increases as you clear more lines.",
+        "",
+        "Press any key to go back",
+    ])
+    print_centered(block)
+    msvcrt.getch()
