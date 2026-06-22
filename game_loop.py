@@ -54,9 +54,7 @@ def run_game(scores):
             time.sleep(0.01)
 
         if not game.paused:
-            drop_interval = max(0.1, 0.6 - (game.level - 1) * 0.05)
-            if time.time() - last_fall >= drop_interval:
-                game.gravity_tick()
+                            game.gravity_tick()
                 last_fall = time.time()
         else:
             last_fall = time.time()  # don't accumulate fall time while paused
