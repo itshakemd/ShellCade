@@ -66,28 +66,3 @@ def run_game(scores):
             clear_screen()
             print_centered(frame)
             last_render = frame
-
-    # game over
-    made_leaderboard = qualifies_for_leaderboard(scores, game.score)
-    is_new_top = game.score > high_score
-    if made_leaderboard:
-        player_name = get_text_input("NEW HIGH SCORE! Enter your name:" if is_new_top
-                                      else "You made the leaderboard! Enter your name:")
-        scores = save_score(player_name, game.score)
-        high_score_name, high_score = top_score(scores)
-
-    clear_screen()
-    game_over_lines = [
-        "GAME OVER",
-        f"Final Score: {game.score}",
-        f"Lines Cleared: {game.lines}",
-    ]
-    if made_leaderboard:
-        game_over_lines.append("")
-        game_over_lines.append("*** NEW HIGH SCORE! ***" if is_new_top else "*** MADE THE LEADERBOARD! ***")
-    game_over_lines.append(f"Best: {high_score_name} - {high_score}")
-    game_over_lines.append("")
-    print_centered("\n".join(game_over_lines), vertical=False)
-    input("Press Enter to return to menu...")
-    return scores
-
