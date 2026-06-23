@@ -1,6 +1,5 @@
-"""The main gameplay loop: input handling, gravity, rendering, game-over flow."""
+"""The main gameplay loop: input handling, timing, rendering, and scores."""
 
-import random
 import time
 
 import msvcrt
@@ -11,55 +10,55 @@ from keyboard_input import get_text_input
 from scores import qualifies_for_leaderboard, save_score, top_score
 
 
+KEY_DIRECTIONS = {
+    b"w": "UP",
+    b"W": "UP",
+    b"s": "DOWN",
+    b"S": "DOWN",
+    b"a": "LEFT",
+    b"A": "LEFT",
+    b"d": "RIGHT",
+    b"D": "RIGHT",
+}
+ARROW_DIRECTIONS = {
+    b"H": "UP",
+    b"P": "DOWN",
+    b"K": "LEFT",
+    b"M": "RIGHT",
+}
+
+
 def run_game(scores):
-    random.seed()
     high_score_name, high_score = top_score(scores)
     game = Game()
     last_render = None
-    last_fall = time.time()
+    last_step = time.time()
 
     while not game.game_over:
-        start = time.time()
-        while time.time() - start < 0.03:
+        frame_start = time.time()
+        while time.time() - frame_start < 0.03:
             if msvcrt.kbhit():
                 ch = msvcrt.getch()
                 if ch in (b"\x00", b"\xe0"):
-                    ch2 = msvcrt.getch()
-                    if game.paused:
-                        continue
-                    if ch2 == b"H":  # up arrow
-                        game.rotate()
-                    elif ch2 == b"K":  # left arrow
-                        game.move(-1, 0)
-                    elif ch2 == b"M":  # right arrow
-                        game.move(1, 0)
-                    elif ch2 == b"P":  # down arrow
-                        game.soft_drop()
+                    arrow = msvcrt.getch()
+                    if not game.paused and arrow in ARROW_DIRECTIONS:
+                        game.change_direction(ARROW_DIRECTIONS[arrow])
                 elif ch in (b"p", b"P"):
                     game.paused = not game.paused
                 elif ch in (b"q", b"Q"):
                     game.game_over = True
                     break
-                elif not game.paused:
-                    if ch in (b"a", b"A"):
-                        game.move(-1, 0)
-                    elif ch in (b"d", b"D"):
-                        game.move(1, 0)
-                    elif ch in (b"s", b"S"):
-                        game.soft_drop()
-                    elif ch in (b"w", b"W"):
-                        game.rotate()
-                    elif ch == b" ":
-                        game.hard_drop()
+                elif not game.paused and ch in KEY_DIRECTIONS:
+                    game.change_direction(KEY_DIRECTIONS[ch])
             time.sleep(0.01)
 
         if not game.paused:
-            drop_interval = max(0.1, 0.6 - (game.level - 1) * 0.05)
-            if time.time() - last_fall >= drop_interval:
-                game.gravity_tick()
-                last_fall = time.time()
+            step_interval = max(0.07, 0.18 - (game.level - 1) * 0.015)
+            if time.time() - last_step >= step_interval:
+                game.step()
+                last_step = time.time()
         else:
-            last_fall = time.time()  # don't accumulate fall time while paused
+            last_step = time.time()
 
         frame = game.render(high_score_name, high_score)
         if frame != last_render:
@@ -67,12 +66,13 @@ def run_game(scores):
             print_centered(frame)
             last_render = frame
 
-    # game over
     made_leaderboard = qualifies_for_leaderboard(scores, game.score)
     is_new_top = game.score > high_score
     if made_leaderboard:
-        player_name = get_text_input("NEW HIGH SCORE! Enter your name:" if is_new_top
-                                      else "You made the leaderboard! Enter your name:")
+        prompt = "NEW HIGH SCORE! Enter your name:" if is_new_top else (
+            "You made the leaderboard! Enter your name:"
+        )
+        player_name = get_text_input(prompt)
         scores = save_score(player_name, game.score)
         high_score_name, high_score = top_score(scores)
 
@@ -80,13 +80,17 @@ def run_game(scores):
     game_over_lines = [
         "GAME OVER",
         f"Final Score: {game.score}",
-        f"Lines Cleared: {game.lines}",
+        f"Snake Length: {len(game.snake)}",
     ]
     if made_leaderboard:
-        game_over_lines.append("")
-        game_over_lines.append("*** NEW HIGH SCORE! ***" if is_new_top else "*** MADE THE LEADERBOARD! ***")
-    game_over_lines.append(f"Best: {high_score_name} - {high_score}")
-    game_over_lines.append("")
+        game_over_lines.extend([
+            "",
+            "*** NEW HIGH SCORE! ***" if is_new_top else "*** MADE THE LEADERBOARD! ***",
+        ])
+    game_over_lines.extend([
+        f"Best: {high_score_name} - {high_score}",
+        "",
+    ])
     print_centered("\n".join(game_over_lines), vertical=False)
     input("Press Enter to return to menu...")
     return scores

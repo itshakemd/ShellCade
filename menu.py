@@ -1,4 +1,4 @@
-"""Main menu and informational screens (leaderboard, instructions)."""
+"""Main menu and informational screens for Snake."""
 
 import msvcrt
 
@@ -10,19 +10,19 @@ from scores import format_leaderboard_line
 
 def draw_menu(selected, high_score_name, high_score):
     width = WIDTH * 2 + 2
-    lines = []
-    lines.append("=" * width)
-    lines.append("TETRIS".center(width))
-    lines.append("=" * width)
-    lines.append("")
-    lines.append(f"High Score: {high_score_name} - {high_score}".center(width))
-    lines.append("")
+    lines = [
+        "=" * width,
+        "SNAKE".center(width),
+        "=" * width,
+        "",
+        f"High Score: {high_score_name} - {high_score}".center(width),
+        "",
+    ]
     options = ["Play", "High Score", "Instructions", "Quit"]
-    for i, opt in enumerate(options):
+    for i, option in enumerate(options):
         marker = "> " if i == selected else "  "
-        lines.append((marker + opt).center(width))
-    lines.append("")
-    lines.append("Use W/S or Up/Down, Enter to select".center(width))
+        lines.append((marker + option).center(width))
+    lines.extend(["", "Use W/S or Up/Down, Enter to select".center(width)])
     return "\n".join(lines)
 
 
@@ -46,19 +46,13 @@ def show_menu(high_score_name, high_score):
 def show_high_score_screen(scores):
     clear_screen()
     width = max(WIDTH * 2 + 2, 28)
-    lines = [
-        "=" * width,
-        "LEADERBOARD".center(width),
-        "=" * width,
-        "",
-    ]
+    lines = ["=" * width, "LEADERBOARD".center(width), "=" * width, ""]
     if not scores:
         lines.append("No scores yet".center(width))
     else:
         for i, (name, score) in enumerate(scores, start=1):
             lines.append(format_leaderboard_line(i, name, score, width))
-    lines.append("")
-    lines.append("Press any key to go back".center(width))
+    lines.extend(["", "Press any key to go back".center(width)])
     print_centered("\n".join(lines))
     msvcrt.getch()
 
@@ -68,15 +62,13 @@ def show_instructions_screen():
     block = "\n".join([
         "INSTRUCTIONS",
         "-" * 40,
-        "A / D       - move piece left / right",
-        "S           - soft drop",
-        "W or Up     - rotate piece",
-        "SPACE       - hard drop",
-        "P           - pause / resume",
-        "Q           - quit to menu",
+        "Arrows or W/A/S/D - steer the snake",
+        "P                 - pause / resume",
+        "Q                 - quit to menu",
         "",
-        "Clear horizontal lines to score points.",
-        "Speed increases as you clear more lines.",
+        "Eat the fruit to grow and score 10 points.",
+        "Avoid the walls and your own tail.",
+        "The snake speeds up every 50 points.",
         "",
         "Press any key to go back",
     ])
