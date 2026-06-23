@@ -1,135 +1,105 @@
-"""Core game state and logic: board, scoring, line clears, rendering."""
+"""Core game state and rules for terminal Snake."""
 
-from constants import WIDTH, HEIGHT, SHAPES
-from piece import Piece, new_bag
+import random
+
+from constants import HEIGHT, WIDTH
+
+
+DIRECTIONS = {
+    "UP": (0, -1),
+    "DOWN": (0, 1),
+    "LEFT": (-1, 0),
+    "RIGHT": (1, 0),
+}
+OPPOSITE = {
+    "UP": "DOWN",
+    "DOWN": "UP",
+    "LEFT": "RIGHT",
+    "RIGHT": "LEFT",
+}
 
 
 class Game:
     def __init__(self):
-        self.board = [[None] * WIDTH for _ in range(HEIGHT)]
-        self.bag = new_bag()
-        self.current = Piece(self.bag.pop())
-        self.next_kind = self.bag.pop() if self.bag else None
+        center = (WIDTH // 2, HEIGHT // 2)
+        self.snake = [
+            center,
+            (center[0] - 1, center[1]),
+            (center[0] - 2, center[1]),
+        ]
+        self.direction = "RIGHT"
+        self.next_direction = "RIGHT"
+        self.food = None
         self.score = 0
-        self.lines = 0
         self.level = 1
         self.game_over = False
         self.paused = False
-        self.fall_time = 0.0
+        self.place_food()
 
-    def refill_bag_if_needed(self):
-        if not self.bag:
-            self.bag = new_bag()
+    def place_food(self):
+        open_cells = [
+            (x, y)
+            for y in range(HEIGHT)
+            for x in range(WIDTH)
+            if (x, y) not in self.snake
+        ]
+        self.food = random.choice(open_cells) if open_cells else None
 
-    def valid(self, cells):
-        for x, y in cells:
-            if x < 0 or x >= WIDTH or y >= HEIGHT:
-                return False
-            if y >= 0 and self.board[y][x] is not None:
-                return False
-        return True
-
-    def lock_piece(self):
-        for x, y in self.current.cells():
-            if y < 0:
-                self.game_over = True
-                return
-            self.board[y][x] = self.current.kind
-        self.clear_lines()
-        self.spawn_next()
-
-    def spawn_next(self):
-        self.refill_bag_if_needed()
-        kind = self.next_kind if self.next_kind else self.bag.pop()
-        self.refill_bag_if_needed()
-        self.next_kind = self.bag.pop()
-        self.current = Piece(kind)
-        if not self.valid(self.current.cells()):
-            self.game_over = True
-
-    def clear_lines(self):
-        new_board = [row for row in self.board if any(c is None for c in row)]
-        cleared = HEIGHT - len(new_board)
-        for _ in range(cleared):
-            new_board.insert(0, [None] * WIDTH)
-        self.board = new_board
-        if cleared:
-            points = {1: 100, 2: 300, 3: 500, 4: 800}
-            self.score += points.get(cleared, 0) * self.level
-            self.lines += cleared
-            self.level = 1 + self.lines // 10
-
-    def move(self, dx, dy):
-        cells = self.current.cells(x=self.current.x + dx, y=self.current.y + dy)
-        if self.valid(cells):
-            self.current.x += dx
-            self.current.y += dy
-            return True
-        return False
-
-    def rotate(self):
-        states = len(SHAPES[self.current.kind])
-        new_rot = (self.current.rot + 1) % states
-        cells = self.current.cells(rot=new_rot)
-        if self.valid(cells):
-            self.current.rot = new_rot
+    def change_direction(self, direction):
+        if direction not in DIRECTIONS:
             return
-        # simple wall kicks
-        for dx in (-1, 1, -2, 2):
-            kicked = self.current.cells(rot=new_rot, x=self.current.x + dx)
-            if self.valid(kicked):
-                self.current.rot = new_rot
-                self.current.x += dx
-                return
+        if direction != OPPOSITE[self.direction]:
+            self.next_direction = direction
 
-    def hard_drop(self):
-        while self.move(0, 1):
-            self.score += 2
-        self.lock_piece()
+    def step(self):
+        if self.game_over or self.paused:
+            return
+        self.direction = self.next_direction
+        dx, dy = DIRECTIONS[self.direction]
+        head_x, head_y = self.snake[0]
+        new_head = (head_x + dx, head_y + dy)
+        eating = new_head == self.food
+        body_to_check = self.snake if eating else self.snake[:-1]
 
-    def soft_drop(self):
-        if not self.move(0, 1):
-            self.lock_piece()
+        if (
+            not (0 <= new_head[0] < WIDTH and 0 <= new_head[1] < HEIGHT)
+            or new_head in body_to_check
+        ):
+            self.game_over = True
+            return
+
+        self.snake.insert(0, new_head)
+        if eating:
+            self.score += 10
+            self.level = 1 + self.score // 50
+            self.place_food()
         else:
-            self.score += 1
-
-    def gravity_tick(self):
-        if not self.move(0, 1):
-            self.lock_piece()
-
-    def ghost_y(self):
-        gy = self.current.y
-        while self.valid(self.current.cells(y=gy + 1)):
-            gy += 1
-        return gy
+            self.snake.pop()
 
     def render(self, high_score_name, high_score):
-        ghost_y = self.ghost_y()
-        ghost_cells = set(self.current.cells(y=ghost_y))
-        piece_cells = set(self.current.cells())
-
-        lines = []
-        lines.append("TETRIS".center(WIDTH * 2 + 2))
-        lines.append("+" + "-" * (WIDTH * 2) + "+")
+        snake_cells = set(self.snake)
+        lines = [
+            "SNAKE".center(WIDTH * 2 + 2),
+            "+" + "-" * (WIDTH * 2) + "+",
+        ]
         for y in range(HEIGHT):
             row = "|"
             for x in range(WIDTH):
-                if (x, y) in piece_cells:
+                if (x, y) == self.snake[0]:
+                    row += "@@"
+                elif (x, y) in snake_cells:
                     row += "[]"
-                elif self.board[y][x] is not None:
-                    row += "[]"
-                elif (x, y) in ghost_cells:
-                    row += ".."
+                elif (x, y) == self.food:
+                    row += "()"
                 else:
                     row += "  "
-            row += "|"
-            lines.append(row)
-        lines.append("+" + "-" * (WIDTH * 2) + "+")
-        lines.append(f"Score: {self.score}   Lines: {self.lines}   Level: {self.level}")
-        lines.append(f"Best: {high_score_name} - {high_score}")
-        nxt = self.next_kind or "?"
-        lines.append(f"Next: {nxt}")
+            lines.append(row + "|")
+        lines.extend([
+            "+" + "-" * (WIDTH * 2) + "+",
+            f"Score: {self.score}   Length: {len(self.snake)}   Level: {self.level}",
+            f"Best: {high_score_name} - {high_score}",
+        ])
         if self.paused:
             lines.append("*** PAUSED - press P to resume ***")
-        lines.append("A/D move  S soft-drop  W rotate  SPACE hard-drop  P pause  Q quit")
+        lines.append("Arrows/WASD move  P pause  Q quit")
         return "\n".join(lines)
