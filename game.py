@@ -20,7 +20,8 @@ OPPOSITE = {
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, rng=None):
+        self.rng = rng or random
         center = (WIDTH // 2, HEIGHT // 2)
         self.snake = [
             center,
@@ -44,7 +45,7 @@ class Game:
             for x in range(WIDTH)
             if (x, y) not in self.snake
         ]
-        self.food = random.choice(open_cells) if open_cells else None
+        self.food = self.rng.choice(open_cells) if open_cells else None
 
     def change_direction(self, direction):
         if direction not in DIRECTIONS:
