@@ -46,7 +46,7 @@ def run_game(scores):
                 elif ch in (b"p", b"P"):
                     game.paused = not game.paused
                 elif ch in (b"q", b"Q"):
-                    game.game_over = True
+                    game.quit_requested = True
                     break
                 elif not game.paused and ch in KEY_DIRECTIONS:
                     game.change_direction(KEY_DIRECTIONS[ch])
@@ -65,6 +65,10 @@ def run_game(scores):
             clear_screen()
             print_centered(frame)
             last_render = frame
+
+    if game.quit_requested:
+        clear_screen()
+        return scores
 
     made_leaderboard = qualifies_for_leaderboard(scores, game.score)
     is_new_top = game.score > high_score

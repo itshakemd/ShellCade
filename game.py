@@ -33,6 +33,7 @@ class Game:
         self.score = 0
         self.level = 1
         self.game_over = False
+        self.quit_requested = False
         self.paused = False
         self.place_food()
 
