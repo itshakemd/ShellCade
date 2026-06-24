@@ -53,6 +53,10 @@ class Game:
         if direction != OPPOSITE[self.direction]:
             self.next_direction = direction
 
+    def collides(self, position, body):
+        x, y = position
+        return not (0 <= x < WIDTH and 0 <= y < HEIGHT) or position in body
+
     def step(self):
         if self.game_over or self.paused:
             return
@@ -63,10 +67,7 @@ class Game:
         eating = new_head == self.food
         body_to_check = self.snake if eating else self.snake[:-1]
 
-        if (
-            not (0 <= new_head[0] < WIDTH and 0 <= new_head[1] < HEIGHT)
-            or new_head in body_to_check
-        ):
+        if self.collides(new_head, body_to_check):
             self.game_over = True
             return
 
