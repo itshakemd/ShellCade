@@ -34,6 +34,12 @@ python snake.py
 
 You can also double-click `snake.bat`.
 
+To run the rule regression tests:
+
+```text
+python -m unittest test_snake.py
+```
+
 ## Project Structure
 
 - `snake.py` - application entry point
@@ -44,6 +50,7 @@ You can also double-click `snake.bat`.
 - `keyboard_input.py` - Windows keyboard and name-entry handling
 - `scores.py` - persistent leaderboard storage
 - `constants.py` - board dimensions and shared paths
+- `test_snake.py` - regression tests for movement and collisions
 
 ## License
 
