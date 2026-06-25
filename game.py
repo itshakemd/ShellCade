@@ -33,6 +33,7 @@ class Game:
         self.food = None
         self.score = 0
         self.level = 1
+        self.food_eaten = 0
         self.game_over = False
         self.quit_requested = False
         self.paused = False
@@ -74,6 +75,7 @@ class Game:
         self.snake.insert(0, new_head)
         if eating:
             self.score += 10
+            self.food_eaten += 1
             self.level = 1 + self.score // 50
             self.place_food()
         else:
@@ -100,6 +102,7 @@ class Game:
         lines.extend([
             "+" + "-" * (WIDTH * 2) + "+",
             f"Score: {self.score}   Length: {len(self.snake)}   Level: {self.level}",
+            f"Fruit: {self.food_eaten}   Next level: {50 - self.score % 50} points",
             f"Best: {high_score_name} - {high_score}",
         ])
         if self.paused:
