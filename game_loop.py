@@ -83,6 +83,7 @@ def run_game(scores):
     clear_screen()
     game_over_lines = [
         "GAME OVER",
+        game.death_reason,
         f"Final Score: {game.score}",
         f"Snake Length: {len(game.snake)}",
     ]

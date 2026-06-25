@@ -35,6 +35,7 @@ class Game:
         self.level = 1
         self.food_eaten = 0
         self.game_over = False
+        self.death_reason = ""
         self.quit_requested = False
         self.paused = False
         self.place_food()
@@ -70,6 +71,11 @@ class Game:
 
         if self.collides(new_head, body_to_check):
             self.game_over = True
+            self.death_reason = (
+                "You hit the wall."
+                if not (0 <= new_head[0] < WIDTH and 0 <= new_head[1] < HEIGHT)
+                else "You hit your own tail."
+            )
             return
 
         self.snake.insert(0, new_head)
