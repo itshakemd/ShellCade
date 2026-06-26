@@ -1,0 +1,8 @@
+"""Shared settings for ShellPong."""
+
+WIDTH = 56
+HEIGHT = 20
+PADDLE_HEIGHT = 4
+PADDLE_X_MARGIN = 3
+WINNING_SCORE = 7
+FRAME_DELAY = 0.045
