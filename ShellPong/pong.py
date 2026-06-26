@@ -44,3 +44,19 @@ class PongGame:
 
     def move_right(self, amount):
         self.right.move(amount)
+
+    def _paddle_hit(self, paddle, moving_right):
+        in_paddle_range = paddle.y <= self.ball.y < paddle.y + PADDLE_HEIGHT
+        if not in_paddle_range:
+            return False
+        if moving_right:
+            return self.ball.x >= paddle.x - 1
+        return self.ball.x <= paddle.x + 1
+
+    def _score_point(self, left_player):
+        if left_player:
+            self.left_score += 1
+        else:
+            self.right_score += 1
+        self.match_over = max(self.left_score, self.right_score) >= WINNING_SCORE
+        self.reset_ball(direction=-1 if left_player else 1)
