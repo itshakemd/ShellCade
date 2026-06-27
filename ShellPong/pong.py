@@ -83,3 +83,18 @@ class PongGame:
             self.right.move(-1)
         elif target > self.right.y:
             self.right.move(1)
+
+    def render(self):
+        lines = ["SHELLPONG".center(WIDTH), f"{self.left_score}  -  {self.right_score}".center(WIDTH)]
+        lines.append("+" + "-" * (WIDTH - 2) + "+")
+        for y in range(1, HEIGHT - 1):
+            row = [" "] * WIDTH
+            if int(self.left.y) <= y < int(self.left.y) + PADDLE_HEIGHT:
+                row[self.left.x] = "|"
+            if int(self.right.y) <= y < int(self.right.y) + PADDLE_HEIGHT:
+                row[self.right.x] = "|"
+            if int(self.ball.y) == y and 0 <= int(self.ball.x) < WIDTH:
+                row[int(self.ball.x)] = "O"
+            lines.append("|" + "".join(row[1:-1]) + "|")
+        lines.append("+" + "-" * (WIDTH - 2) + "+")
+        return "\n".join(lines)
