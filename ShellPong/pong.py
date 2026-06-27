@@ -60,3 +60,19 @@ class PongGame:
             self.right_score += 1
         self.match_over = max(self.left_score, self.right_score) >= WINNING_SCORE
         self.reset_ball(direction=-1 if left_player else 1)
+
+    def tick(self):
+        if self.paused or self.match_over or self.round_over:
+            return
+        self.ball.x += self.ball.vx
+        self.ball.y += self.ball.vy
+        if self.ball.y <= 1 or self.ball.y >= HEIGHT - 2:
+            self.ball.vy *= -1
+        if self.ball.vx < 0 and self._paddle_hit(self.left, False):
+            self.ball.vx = abs(self.ball.vx) + 0.04
+        elif self.ball.vx > 0 and self._paddle_hit(self.right, True):
+            self.ball.vx = -abs(self.ball.vx) - 0.04
+        if self.ball.x < 0:
+            self._score_point(False)
+        elif self.ball.x >= WIDTH:
+            self._score_point(True)
