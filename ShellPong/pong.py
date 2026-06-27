@@ -76,3 +76,10 @@ class PongGame:
             self._score_point(False)
         elif self.ball.x >= WIDTH:
             self._score_point(True)
+
+    def ai_move(self):
+        target = self.ball.y - PADDLE_HEIGHT / 2
+        if target < self.right.y:
+            self.right.move(-1)
+        elif target > self.right.y:
+            self.right.move(1)
