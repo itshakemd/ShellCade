@@ -102,4 +102,9 @@ class PongGame:
             lines.append("|" + "".join(row[1:-1]) + "|")
         lines.append("+" + "-" * (WIDTH - 2) + "+")
         lines.append("P1: W/S    P2: Up/Down    P: pause    Q: quit".center(WIDTH))
+        if self.paused:
+            lines.append("PAUSED".center(WIDTH))
+        elif self.match_over:
+            winner = "PLAYER 1" if self.left_score > self.right_score else "PLAYER 2"
+            lines.append(f"{winner} WINS!".center(WIDTH))
         return "\n".join(lines)
