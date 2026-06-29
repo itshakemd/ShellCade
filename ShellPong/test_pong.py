@@ -16,6 +16,13 @@ class PongTests(unittest.TestCase):
         game.tick()
         self.assertEqual(game.right_score, 1)
 
+    def test_ball_bounces_from_top_wall(self):
+        game = PongGame()
+        game.ball.y = 1
+        game.ball.vy = -1
+        game.tick()
+        self.assertGreater(game.ball.vy, 0)
+
 
 if __name__ == "__main__":
     unittest.main()
