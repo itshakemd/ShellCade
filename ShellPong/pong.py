@@ -85,7 +85,11 @@ class PongGame:
             self.right.move(1)
 
     def render(self):
-        lines = ["SHELLPONG".center(WIDTH), f"{self.left_score}  -  {self.right_score}".center(WIDTH)]
+        mode = "TWO PLAYER" if self.two_player else "SINGLE PLAYER"
+        lines = [
+            f"SHELLPONG - {mode}".center(WIDTH),
+            f"{self.left_score}  -  {self.right_score}".center(WIDTH),
+        ]
         lines.append("+" + "-" * (WIDTH - 2) + "+")
         for y in range(1, HEIGHT - 1):
             row = [" "] * WIDTH
@@ -97,4 +101,5 @@ class PongGame:
                 row[int(self.ball.x)] = "O"
             lines.append("|" + "".join(row[1:-1]) + "|")
         lines.append("+" + "-" * (WIDTH - 2) + "+")
+        lines.append("P1: W/S    P2: Up/Down    P: pause    Q: quit".center(WIDTH))
         return "\n".join(lines)
