@@ -70,8 +70,10 @@ class PongGame:
             self.ball.vy *= -1
         if self.ball.vx < 0 and self._paddle_hit(self.left, False):
             self.ball.vx = abs(self.ball.vx) + 0.04
+            self.ball.vy += (self.ball.y - (self.left.y + PADDLE_HEIGHT / 2)) * 0.08
         elif self.ball.vx > 0 and self._paddle_hit(self.right, True):
             self.ball.vx = -abs(self.ball.vx) - 0.04
+            self.ball.vy += (self.ball.y - (self.right.y + PADDLE_HEIGHT / 2)) * 0.08
         if self.ball.x < 0:
             self._score_point(False)
         elif self.ball.x >= WIDTH:
