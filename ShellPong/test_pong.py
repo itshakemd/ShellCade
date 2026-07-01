@@ -1,6 +1,7 @@
 import unittest
 
 from pong import PongGame
+from constants import WIDTH
 
 
 class PongTests(unittest.TestCase):
