@@ -23,6 +23,13 @@ class PongTests(unittest.TestCase):
         game.tick()
         self.assertGreater(game.ball.vy, 0)
 
+    def test_single_player_ai_tracks_ball(self):
+        game = PongGame()
+        game.ball.y = 3
+        game.right.y = 10
+        game.ai_move()
+        self.assertLess(game.right.y, 10)
+
 
 if __name__ == "__main__":
     unittest.main()
