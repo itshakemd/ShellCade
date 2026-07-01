@@ -30,6 +30,13 @@ class PongTests(unittest.TestCase):
         game.ai_move()
         self.assertLess(game.right.y, 10)
 
+    def test_first_to_seven_wins_match(self):
+        game = PongGame()
+        game.left_score = 6
+        game.ball.x = WIDTH + 1
+        game.tick()
+        self.assertTrue(game.match_over)
+
 
 if __name__ == "__main__":
     unittest.main()
