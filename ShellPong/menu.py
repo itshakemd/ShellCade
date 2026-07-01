@@ -1,9 +1,11 @@
 """Text menu for selecting a ShellPong mode."""
 
 import msvcrt
+import os
 
 
 def choose_mode():
+    os.system("cls" if os.name == "nt" else "clear")
     print("SHELLPONG")
     print("==========")
     print("1. Single player")
