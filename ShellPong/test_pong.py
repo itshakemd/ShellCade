@@ -38,6 +38,13 @@ class PongTests(unittest.TestCase):
         game.tick()
         self.assertTrue(game.match_over)
 
+    def test_pause_freezes_ball(self):
+        game = PongGame()
+        game.paused = True
+        position = (game.ball.x, game.ball.y)
+        game.tick()
+        self.assertEqual((game.ball.x, game.ball.y), position)
+
 
 if __name__ == "__main__":
     unittest.main()
