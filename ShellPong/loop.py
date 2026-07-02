@@ -4,7 +4,7 @@ import os
 import time
 
 from constants import FRAME_DELAY
-from input import read_keys
+from input import DOWN, UP, read_keys
 
 
 def run_game(game):
@@ -20,9 +20,9 @@ def run_game(game):
             if b"s" in keys or b"S" in keys:
                 game.move_left(1)
             if game.two_player:
-                if b"\x48" in keys:
+                if UP in keys:
                     game.move_right(-1)
-                if b"\x50" in keys:
+                if DOWN in keys:
                     game.move_right(1)
             else:
                 game.ai_move()

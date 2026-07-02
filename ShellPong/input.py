@@ -2,6 +2,9 @@
 
 import msvcrt
 
+UP = b"H"
+DOWN = b"P"
+
 
 def read_keys():
     keys = set()
