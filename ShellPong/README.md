@@ -20,3 +20,9 @@ You can also launch `pong.bat`.
 - `P` pauses and `Q` quits.
 
 The first player to reach seven points wins.
+
+Run the automated rules tests with:
+
+```text
+python -m unittest test_pong.py
+```
