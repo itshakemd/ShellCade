@@ -21,6 +21,9 @@ You can also launch `pong.bat`.
 
 The first player to reach seven points wins.
 
+The court uses a compact ASCII layout designed for standard Windows
+Command Prompt and PowerShell windows.
+
 Run the automated rules tests with:
 
 ```text

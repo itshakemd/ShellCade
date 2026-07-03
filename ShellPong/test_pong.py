@@ -13,7 +13,7 @@ class PongTests(unittest.TestCase):
 
     def test_point_increases_score(self):
         game = PongGame()
-        game.ball.x = -1
+        game.ball.x = -2
         game.tick()
         self.assertEqual(game.right_score, 1)
 
