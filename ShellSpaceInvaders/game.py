@@ -46,3 +46,16 @@ class InvadersGame:
     def fire(self):
         if not any(shot.owner == "player" for shot in self.projectiles):
             self.projectiles.append(Projectile(self.player_x, PLAYER_Y - 1, -1, "player"))
+
+    def move_enemies(self):
+        living = self.alive_enemies
+        if not living:
+            return
+        left = min(enemy.x for enemy in living)
+        right = max(enemy.x for enemy in living)
+        if left <= 2 or right >= WIDTH - 3:
+            self.enemy_direction *= -1
+            for enemy in living:
+                enemy.y += 1
+        for enemy in living:
+            enemy.x += self.enemy_direction
