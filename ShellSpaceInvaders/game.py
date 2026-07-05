@@ -66,3 +66,18 @@ class InvadersGame:
         self.projectiles = [
             shot for shot in self.projectiles if 0 < shot.y < HEIGHT
         ]
+
+    def resolve_hits(self):
+        remaining = []
+        for shot in self.projectiles:
+            hit = False
+            if shot.owner == "player":
+                for enemy in self.alive_enemies:
+                    if enemy.x == shot.x and enemy.y == shot.y:
+                        enemy.alive = False
+                        self.score += 10 + (3 - enemy.row) * 5
+                        hit = True
+                        break
+            if not hit:
+                remaining.append(shot)
+        self.projectiles = remaining
