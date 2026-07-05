@@ -59,3 +59,10 @@ class InvadersGame:
                 enemy.y += 1
         for enemy in living:
             enemy.x += self.enemy_direction
+
+    def move_projectiles(self):
+        for shot in self.projectiles:
+            shot.y += shot.dy
+        self.projectiles = [
+            shot for shot in self.projectiles if 0 < shot.y < HEIGHT
+        ]
