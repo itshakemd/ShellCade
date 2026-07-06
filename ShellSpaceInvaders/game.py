@@ -81,3 +81,10 @@ class InvadersGame:
             if not hit:
                 remaining.append(shot)
         self.projectiles = remaining
+
+    def enemy_fire(self):
+        living = self.alive_enemies
+        if not living:
+            return
+        shooter = living[-1]
+        self.projectiles.append(Projectile(shooter.x, shooter.y + 1, 1, "enemy"))
