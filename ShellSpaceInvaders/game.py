@@ -114,3 +114,6 @@ class InvadersGame:
         self.move_projectiles()
         self.resolve_hits()
         self.resolve_player_hits()
+        if not self.alive_enemies:
+            self.wave += 1
+            self.spawn_wave()
