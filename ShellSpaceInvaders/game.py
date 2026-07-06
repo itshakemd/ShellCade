@@ -88,3 +88,17 @@ class InvadersGame:
             return
         shooter = living[-1]
         self.projectiles.append(Projectile(shooter.x, shooter.y + 1, 1, "enemy"))
+
+    def resolve_player_hits(self):
+        survivors = []
+        hit_player = False
+        for shot in self.projectiles:
+            if shot.owner == "enemy" and shot.x == self.player_x and shot.y >= PLAYER_Y:
+                hit_player = True
+            else:
+                survivors.append(shot)
+        self.projectiles = survivors
+        if hit_player:
+            self.lives -= 1
+            if self.lives <= 0:
+                self.game_over = True
