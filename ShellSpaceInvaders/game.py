@@ -102,3 +102,15 @@ class InvadersGame:
             self.lives -= 1
             if self.lives <= 0:
                 self.game_over = True
+
+    def tick(self):
+        if self.paused or self.game_over:
+            return
+        self.enemy_tick += 1
+        if self.enemy_tick % 3 == 0:
+            self.move_enemies()
+        if self.enemy_tick % 15 == 0:
+            self.enemy_fire()
+        self.move_projectiles()
+        self.resolve_hits()
+        self.resolve_player_hits()
