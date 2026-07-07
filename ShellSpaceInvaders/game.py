@@ -72,6 +72,9 @@ class InvadersGame:
         remaining = []
         for shot in self.projectiles:
             hit = False
+            if (shot.x, shot.y) in self.shields:
+                self.shields.remove((shot.x, shot.y))
+                continue
             if shot.owner == "player":
                 for enemy in self.alive_enemies:
                     if enemy.x == shot.x and enemy.y == shot.y:
