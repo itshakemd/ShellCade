@@ -121,3 +121,21 @@ class InvadersGame:
         if not self.alive_enemies:
             self.wave += 1
             self.spawn_wave()
+
+    def render(self):
+        rows = [[" "] * WIDTH for _ in range(HEIGHT)]
+        rows[PLAYER_Y][self.player_x] = "A"
+        for x, y in self.shields:
+            rows[y][x] = "#"
+        for enemy in self.alive_enemies:
+            if 0 <= enemy.y < HEIGHT and 0 <= enemy.x < WIDTH:
+                rows[enemy.y][enemy.x] = "W"
+        for shot in self.projectiles:
+            if 0 <= shot.y < HEIGHT and 0 <= shot.x < WIDTH:
+                rows[shot.y][shot.x] = "|" if shot.owner == "player" else "!"
+        lines = ["SHELL SPACE INVADERS".center(WIDTH),
+                 f"Score: {self.score}  Lives: {self.lives}  Wave: {self.wave}".center(WIDTH),
+                 "+" + "-" * (WIDTH - 2) + "+"]
+        lines.extend("|" + "".join(row[1:-1]) + "|" for row in rows[1:-1])
+        lines.append("+" + "-" * (WIDTH - 2) + "+")
+        return "\n".join(lines)
