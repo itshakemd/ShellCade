@@ -26,6 +26,7 @@ class InvadersGame:
         self.paused = False
         self.enemy_direction = 1
         self.enemy_tick = 0
+        self.shields = {(18, PLAYER_Y - 2), (19, PLAYER_Y - 2), (40, PLAYER_Y - 2), (41, PLAYER_Y - 2)}
         self.spawn_wave()
 
     def spawn_wave(self):
