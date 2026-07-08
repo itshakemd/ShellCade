@@ -49,3 +49,21 @@ def choose():
             return OPTIONS[selected]
         elif key == "QUIT":
             return "Quit"
+
+
+def show_instructions():
+    os.system("cls" if os.name == "nt" else "clear")
+    _show("\n".join([
+        "SPACE INVADERS INSTRUCTIONS",
+        "-" * WIDTH,
+        "A / D       move the cannon",
+        "SPACE       fire",
+        "P           pause / resume",
+        "Q           quit to menu",
+        "",
+        "Destroy every invader before they reach you.",
+        "Shields absorb one hit. You have three lives.",
+        "",
+        "Press any key to return",
+    ]))
+    msvcrt.getch()
