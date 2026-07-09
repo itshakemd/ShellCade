@@ -113,6 +113,8 @@ class InvadersGame:
         self.enemy_tick += 1
         if self.enemy_tick % 3 == 0:
             self.move_enemies()
+            if any(enemy.y >= PLAYER_Y - 1 for enemy in self.alive_enemies):
+                self.game_over = True
         if self.enemy_tick % 15 == 0:
             self.enemy_fire()
         self.move_projectiles()
