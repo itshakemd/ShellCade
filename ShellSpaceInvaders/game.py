@@ -26,6 +26,7 @@ class InvadersGame:
         self.paused = False
         self.enemy_direction = 1
         self.enemy_tick = 0
+        self.shot_cooldown = 0
         self.shields = {(18, PLAYER_Y - 2), (19, PLAYER_Y - 2), (40, PLAYER_Y - 2), (41, PLAYER_Y - 2)}
         self.spawn_wave()
 
@@ -45,8 +46,9 @@ class InvadersGame:
         self.player_x = max(2, min(WIDTH - 3, self.player_x + amount))
 
     def fire(self):
-        if not any(shot.owner == "player" for shot in self.projectiles):
+        if self.shot_cooldown == 0 and not any(shot.owner == "player" for shot in self.projectiles):
             self.projectiles.append(Projectile(self.player_x, PLAYER_Y - 1, -1, "player"))
+            self.shot_cooldown = 8
 
     def move_enemies(self):
         living = self.alive_enemies
@@ -110,6 +112,7 @@ class InvadersGame:
     def tick(self):
         if self.paused or self.game_over:
             return
+        self.shot_cooldown = max(0, self.shot_cooldown - 1)
         self.enemy_tick += 1
         if self.enemy_tick % 3 == 0:
             self.move_enemies()
