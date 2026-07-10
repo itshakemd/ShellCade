@@ -34,6 +34,13 @@ class InvadersTests(unittest.TestCase):
         game.resolve_player_hits()
         self.assertEqual(game.lives, 2)
 
+    def test_pause_freezes_tick(self):
+        game = InvadersGame()
+        game.paused = True
+        position = [(enemy.x, enemy.y) for enemy in game.alive_enemies]
+        game.tick()
+        self.assertEqual(position, [(enemy.x, enemy.y) for enemy in game.alive_enemies])
+
 
 if __name__ == "__main__":
     unittest.main()
