@@ -26,6 +26,14 @@ class InvadersTests(unittest.TestCase):
         self.assertFalse(enemy.alive)
         self.assertGreater(game.score, 0)
 
+    def test_enemy_hit_costs_a_life(self):
+        game = InvadersGame()
+        game.projectiles = [
+            type("Shot", (), {"x": game.player_x, "y": PLAYER_Y, "owner": "enemy"})()
+        ]
+        game.resolve_player_hits()
+        self.assertEqual(game.lives, 2)
+
 
 if __name__ == "__main__":
     unittest.main()
