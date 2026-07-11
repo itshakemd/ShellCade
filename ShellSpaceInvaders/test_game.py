@@ -41,6 +41,15 @@ class InvadersTests(unittest.TestCase):
         game.tick()
         self.assertEqual(position, [(enemy.x, enemy.y) for enemy in game.alive_enemies])
 
+    def test_wave_respawns_after_last_invader(self):
+        game = InvadersGame()
+        game.enemies[0].alive = False
+        for enemy in game.enemies[1:]:
+            enemy.alive = False
+        game.tick()
+        self.assertEqual(game.wave, 2)
+        self.assertEqual(len(game.alive_enemies), 32)
+
 
 if __name__ == "__main__":
     unittest.main()
