@@ -143,4 +143,8 @@ class InvadersGame:
                  "+" + "-" * (WIDTH - 2) + "+"]
         lines.extend("|" + "".join(row[1:-1]) + "|" for row in rows[1:-1])
         lines.append("+" + "-" * (WIDTH - 2) + "+")
+        if self.paused:
+            lines.append("PAUSED - press P to resume".center(WIDTH))
+        elif self.game_over:
+            lines.append("GAME OVER".center(WIDTH))
         return "\n".join(lines)
