@@ -1,0 +1,1 @@
+"""ShellSpaceInvaders package."""
