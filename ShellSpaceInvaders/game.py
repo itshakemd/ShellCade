@@ -6,6 +6,8 @@ from constants import (
     ENEMY_START_Y,
     ENEMY_X_GAP,
     ENEMY_Y_GAP,
+    ENEMY_STEP_EVERY,
+    ENEMY_FIRE_EVERY,
     HEIGHT,
     PLAYER_START_X,
     PLAYER_Y,
@@ -114,11 +116,11 @@ class InvadersGame:
             return
         self.shot_cooldown = max(0, self.shot_cooldown - 1)
         self.enemy_tick += 1
-        if self.enemy_tick % 3 == 0:
+        if self.enemy_tick % ENEMY_STEP_EVERY == 0:
             self.move_enemies()
             if any(enemy.y >= PLAYER_Y - 1 for enemy in self.alive_enemies):
                 self.game_over = True
-        if self.enemy_tick % 15 == 0:
+        if self.enemy_tick % ENEMY_FIRE_EVERY == 0:
             self.enemy_fire()
         self.move_projectiles()
         self.resolve_hits()
