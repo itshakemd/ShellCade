@@ -50,6 +50,12 @@ class InvadersTests(unittest.TestCase):
         self.assertEqual(game.wave, 2)
         self.assertEqual(len(game.alive_enemies), 32)
 
+    def test_cannon_shot_cooldown_prevents_duplicate_shots(self):
+        game = InvadersGame()
+        game.fire()
+        game.fire()
+        self.assertEqual(len([shot for shot in game.projectiles if shot.owner == "player"]), 1)
+
 
 if __name__ == "__main__":
     unittest.main()
