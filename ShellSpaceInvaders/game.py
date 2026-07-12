@@ -33,6 +33,8 @@ class InvadersGame:
         self.spawn_wave()
 
     def spawn_wave(self):
+        self.enemy_direction = 1
+        self.enemy_tick = 0
         self.enemies = [
             Enemy(8 + column * ENEMY_X_GAP, ENEMY_START_Y + row * ENEMY_Y_GAP, row)
             for row in range(ENEMY_ROWS)
