@@ -96,7 +96,10 @@ class InvadersGame:
         living = self.alive_enemies
         if not living:
             return
-        shooter = living[-1]
+        shooter = min(
+            living,
+            key=lambda enemy: (abs(enemy.x - self.player_x), -enemy.y),
+        )
         self.projectiles.append(Projectile(shooter.x, shooter.y + 1, 1, "enemy"))
 
     def resolve_player_hits(self):

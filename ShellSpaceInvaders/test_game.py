@@ -56,6 +56,12 @@ class InvadersTests(unittest.TestCase):
         game.fire()
         self.assertEqual(len([shot for shot in game.projectiles if shot.owner == "player"]), 1)
 
+    def test_enemy_fire_comes_from_invader_nearest_to_cannon(self):
+        game = InvadersGame()
+        game.player_x = 28
+        game.enemy_fire()
+        self.assertEqual(game.projectiles[-1].x, 28)
+
 
 if __name__ == "__main__":
     unittest.main()
