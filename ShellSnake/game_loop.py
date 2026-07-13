@@ -3,8 +3,9 @@
 import time
 
 import msvcrt
+from blessed import Terminal
 
-from display import clear_screen, print_centered
+from display import center_block
 from game import Game
 from keyboard_input import get_text_input
 from scores import qualifies_for_leaderboard, save_score, top_score
@@ -29,6 +30,7 @@ ARROW_DIRECTIONS = {
 
 
 def run_game(scores):
+    term = Terminal()
     high_score_name, high_score = top_score(scores)
     game = Game()
     last_render = None
@@ -62,12 +64,11 @@ def run_game(scores):
 
         frame = game.render(high_score_name, high_score)
         if frame != last_render:
-            clear_screen()
-            print_centered(frame)
+            print(term.home + term.clear + term.bold_green(center_block(frame)))
             last_render = frame
 
     if game.quit_requested:
-        clear_screen()
+        print(term.home + term.clear)
         return scores
 
     made_leaderboard = qualifies_for_leaderboard(scores, game.score)
@@ -80,7 +81,7 @@ def run_game(scores):
         scores = save_score(player_name, game.score)
         high_score_name, high_score = top_score(scores)
 
-    clear_screen()
+    print(term.home + term.clear)
     game_over_lines = [
         "GAME OVER",
         game.death_reason,
