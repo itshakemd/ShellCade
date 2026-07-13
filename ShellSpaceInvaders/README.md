@@ -15,3 +15,9 @@ From this folder, run `python main.py` or launch `invaders.bat`.
 
 Destroy the descending invader formation, protect yourself with the shields,
 and survive as many waves as possible.
+
+Run the regression tests with:
+
+```text
+python -m unittest test_game.py
+```
