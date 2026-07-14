@@ -1,13 +1,15 @@
 """Live Space Invaders loop."""
 
-import os
 import time
+
+from blessed import Terminal
 
 from constants import FRAME_DELAY
 from input import read_keys
 
 
 def run_game(game):
+    term = Terminal()
     while not game.game_over:
         keys = read_keys()
         if b"q" in keys or b"Q" in keys:
@@ -22,7 +24,6 @@ def run_game(game):
             if b" " in keys:
                 game.fire()
             game.tick()
-        os.system("cls" if os.name == "nt" else "clear")
-        print(game.render())
+        print(term.home + term.clear + term.bright_red(game.render()))
         time.sleep(FRAME_DELAY)
     return True
