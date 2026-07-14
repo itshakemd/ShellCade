@@ -1,13 +1,15 @@
 """Live game loop for single-player and two-player matches."""
 
-import os
 import time
+
+from blessed import Terminal
 
 from constants import FRAME_DELAY
 from input import DOWN, UP, read_keys
 
 
 def run_game(game):
+    term = Terminal()
     while not game.match_over:
         keys = read_keys()
         if b"q" in keys or b"Q" in keys:
@@ -27,7 +29,6 @@ def run_game(game):
             else:
                 game.ai_move()
             game.tick()
-        os.system("cls" if os.name == "nt" else "clear")
-        print(game.render())
+        print(term.home + term.clear + term.bold_yellow(game.render()))
         time.sleep(FRAME_DELAY)
     return True
