@@ -2,6 +2,9 @@
 
 ShellTetris is the original terminal Tetris game in the Shellcade collection.
 
+Install the root `requirements.txt` before playing to enable Blessed terminal
+rendering.
+
 ## Run
 
 From this folder, run `python tetris.py` or double-click `tetris.bat`.

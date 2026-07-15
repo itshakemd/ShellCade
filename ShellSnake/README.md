@@ -3,6 +3,9 @@
 Shellsnake is a terminal-based Snake game for Windows, built as part of the
 Shellcade collection of classic arcade experiences.
 
+Install the root `requirements.txt` before playing to enable Blessed terminal
+rendering.
+
 ## Features
 
 - Real-time Snake gameplay in a terminal

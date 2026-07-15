@@ -3,6 +3,9 @@
 ShellPong is a Windows terminal Pong game with single-player and two-player
 modes.
 
+Install the root `requirements.txt` before playing to enable Blessed terminal
+rendering.
+
 ## Run
 
 From this directory:

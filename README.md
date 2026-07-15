@@ -29,3 +29,12 @@ the matching `.bat` file where provided.
 
 Each folder contains its own game logic, display helpers, controls, and score
 data so the games can evolve independently.
+
+## Installation
+
+The games use the `blessed` library for colored terminal rendering and screen
+control. Install the dependency from the repository root:
+
+```text
+python -m pip install -r requirements.txt
+```
