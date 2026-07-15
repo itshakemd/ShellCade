@@ -7,5 +7,5 @@ def create_terminal():
     return Terminal()
 
 
-def frame(term, content):
+def terminal_frame(term, content):
     return term.home + term.clear + term.bold_green(content)

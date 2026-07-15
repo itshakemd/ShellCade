@@ -3,12 +3,12 @@
 import time
 
 import msvcrt
-from blessed import Terminal
 
 from display import center_block
 from game import Game
 from keyboard_input import get_text_input
 from scores import qualifies_for_leaderboard, save_score, top_score
+from ui import create_terminal, terminal_frame
 
 
 KEY_DIRECTIONS = {
@@ -30,7 +30,7 @@ ARROW_DIRECTIONS = {
 
 
 def run_game(scores):
-    term = Terminal()
+    term = create_terminal()
     high_score_name, high_score = top_score(scores)
     game = Game()
     last_render = None
@@ -64,7 +64,7 @@ def run_game(scores):
 
         frame = game.render(high_score_name, high_score)
         if frame != last_render:
-            print(term.home + term.clear + term.bold_green(center_block(frame)))
+            print(terminal_frame(term, center_block(frame)))
             last_render = frame
 
     if game.quit_requested:
