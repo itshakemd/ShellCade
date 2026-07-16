@@ -6,6 +6,9 @@ Shellcade collection of classic arcade experiences.
 Install the root `requirements.txt` before playing to enable Blessed terminal
 rendering.
 
+The `ui.py` module owns the Snake terminal session and keeps screen control
+separate from gameplay rules.
+
 ## Features
 
 - Real-time Snake gameplay in a terminal
