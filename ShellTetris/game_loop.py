@@ -4,16 +4,15 @@ import random
 import time
 
 import msvcrt
-from blessed import Terminal
-
 from display import center_block
 from game import Game
 from keyboard_input import get_text_input
 from scores import qualifies_for_leaderboard, save_score, top_score
+from ui import create_terminal, terminal_frame
 
 
 def run_game(scores):
-    term = Terminal()
+    term = create_terminal()
     random.seed()
     high_score_name, high_score = top_score(scores)
     game = Game()
@@ -65,7 +64,7 @@ def run_game(scores):
 
         frame = game.render(high_score_name, high_score)
         if frame != last_render:
-            print(term.home + term.clear + term.bold_cyan(center_block(frame)))
+            print(terminal_frame(term, center_block(frame)))
             last_render = frame
 
     # game over
@@ -88,6 +87,6 @@ def run_game(scores):
         game_over_lines.append("*** NEW HIGH SCORE! ***" if is_new_top else "*** MADE THE LEADERBOARD! ***")
     game_over_lines.append(f"Best: {high_score_name} - {high_score}")
     game_over_lines.append("")
-    print(term.bold_cyan(center_block("\n".join(game_over_lines), vertical=False)))
+    print(terminal_frame(term, center_block("\n".join(game_over_lines), vertical=False)))
     input("Press Enter to return to menu...")
     return scores
