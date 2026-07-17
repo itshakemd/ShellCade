@@ -3,8 +3,10 @@
 import msvcrt
 import os
 import shutil
+from blessed import Terminal
 
 from constants import WIDTH
+from ui import terminal_frame
 
 
 OPTIONS = ["Single Player", "Two Players", "Instructions", "Quit"]
@@ -55,10 +57,11 @@ def _draw_menu(selected):
 
 
 def choose_mode():
+    term = Terminal()
     selected = 0
     while True:
         _clear()
-        print(_center(_draw_menu(selected)))
+        print(terminal_frame(term, _center(_draw_menu(selected))))
         key = _read_menu_key()
         if key == "UP":
             selected = (selected - 1) % len(OPTIONS)
@@ -78,6 +81,7 @@ def choose_mode():
 
 
 def show_instructions():
+    term = Terminal()
     _clear()
     block = "\n".join([
         "SHELLPONG INSTRUCTIONS",
@@ -91,5 +95,5 @@ def show_instructions():
         "",
         "Press any key to return to the menu",
     ])
-    print(_center(block))
+    print(terminal_frame(term, _center(block)))
     msvcrt.getch()
