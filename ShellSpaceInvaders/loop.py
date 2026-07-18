@@ -2,14 +2,13 @@
 
 import time
 
-from blessed import Terminal
-
 from constants import FRAME_DELAY
 from input import read_keys
+from ui import create_terminal, terminal_frame
 
 
 def run_game(game):
-    term = Terminal()
+    term = create_terminal()
     while not game.game_over:
         keys = read_keys()
         if b"q" in keys or b"Q" in keys:
@@ -24,6 +23,6 @@ def run_game(game):
             if b" " in keys:
                 game.fire()
             game.tick()
-        print(term.home + term.clear + term.bright_red(game.render()))
+        print(terminal_frame(term, game.render()))
         time.sleep(FRAME_DELAY)
     return True
