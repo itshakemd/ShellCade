@@ -6,6 +6,9 @@ modes.
 Install the root `requirements.txt` before playing to enable Blessed terminal
 rendering.
 
+`ui.py` centralizes terminal lifecycle and frame styling while `pong.py`
+remains focused on deterministic match physics.
+
 ## Run
 
 From this directory:
