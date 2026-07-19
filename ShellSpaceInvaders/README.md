@@ -5,6 +5,9 @@ ShellSpaceInvaders is a Windows terminal arcade shooter.
 Install the root `requirements.txt` before playing to enable Blessed terminal
 rendering.
 
+The `ui.py` module isolates terminal styling from the simulation and collision
+rules in `game.py`.
+
 ## Run
 
 From this folder, run `python main.py` or launch `invaders.bat`.
