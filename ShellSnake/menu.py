@@ -1,11 +1,13 @@
 """Main menu and informational screens for Snake."""
 
 import msvcrt
+from blessed import Terminal
 
 from constants import WIDTH
 from display import clear_screen, print_centered
 from keyboard_input import read_key
 from scores import format_leaderboard_line
+from ui import terminal_frame
 
 
 def draw_menu(selected, high_score_name, high_score):
@@ -27,11 +29,12 @@ def draw_menu(selected, high_score_name, high_score):
 
 
 def show_menu(high_score_name, high_score):
+    term = Terminal()
     options = ["Play", "High Score", "Instructions", "Quit"]
     selected = 0
     while True:
         clear_screen()
-        print_centered(draw_menu(selected, high_score_name, high_score))
+        print(terminal_frame(term, draw_menu(selected, high_score_name, high_score)))
         key = read_key()
         if key == "UP":
             selected = (selected - 1) % len(options)
@@ -44,6 +47,7 @@ def show_menu(high_score_name, high_score):
 
 
 def show_high_score_screen(scores):
+    term = Terminal()
     clear_screen()
     width = max(WIDTH * 2 + 2, 28)
     lines = ["=" * width, "LEADERBOARD".center(width), "=" * width, ""]
@@ -53,11 +57,12 @@ def show_high_score_screen(scores):
         for i, (name, score) in enumerate(scores, start=1):
             lines.append(format_leaderboard_line(i, name, score, width))
     lines.extend(["", "Press any key to go back".center(width)])
-    print_centered("\n".join(lines))
+    print(terminal_frame(term, "\n".join(lines)))
     msvcrt.getch()
 
 
 def show_instructions_screen():
+    term = Terminal()
     clear_screen()
     block = "\n".join([
         "INSTRUCTIONS",
@@ -72,5 +77,5 @@ def show_instructions_screen():
         "",
         "Press any key to go back",
     ])
-    print_centered(block)
+    print(terminal_frame(term, block))
     msvcrt.getch()
