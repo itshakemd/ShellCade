@@ -70,5 +70,5 @@ def show_instructions():
         "Shields absorb one hit. You have three lives.",
         "",
         "Press any key to return",
-    ])))
+    ]))))
     msvcrt.getch()
