@@ -3,8 +3,10 @@
 import msvcrt
 import os
 import shutil
+from blessed import Terminal
 
 from constants import WIDTH
+from ui import terminal_frame
 
 
 OPTIONS = ["Play", "Instructions", "Quit"]
@@ -25,21 +27,23 @@ def _key():
     return ""
 
 
-def _show(block):
+def _show_text(block):
     columns, rows = shutil.get_terminal_size((80, 24))
     lines = block.splitlines()
-    print("\n" * max(0, (rows - len(lines)) // 2))
-    print("\n".join(line.center(columns) for line in lines))
+    return "\n" * max(0, (rows - len(lines)) // 2) + "\n".join(
+        line.center(columns) for line in lines
+    )
 
 
 def choose():
+    term = Terminal()
     selected = 0
     while True:
         os.system("cls" if os.name == "nt" else "clear")
         lines = ["=" * WIDTH, "SHELL SPACE INVADERS".center(WIDTH), "=" * WIDTH, ""]
         lines += [("> " if i == selected else "  ") + option for i, option in enumerate(OPTIONS)]
         lines += ["", "Use W/S or Up/Down, Enter to select"]
-        _show("\n".join(lines))
+        print(terminal_frame(term, _show_text("\n".join(lines))))
         key = _key()
         if key == "UP":
             selected = (selected - 1) % len(OPTIONS)
@@ -52,8 +56,9 @@ def choose():
 
 
 def show_instructions():
+    term = Terminal()
     os.system("cls" if os.name == "nt" else "clear")
-    _show("\n".join([
+    print(terminal_frame(term, _show_text("\n".join([
         "SPACE INVADERS INSTRUCTIONS",
         "-" * WIDTH,
         "A / D       move the cannon",
@@ -65,5 +70,5 @@ def show_instructions():
         "Shields absorb one hit. You have three lives.",
         "",
         "Press any key to return",
-    ]))
+    ])))
     msvcrt.getch()
