@@ -37,3 +37,9 @@ class FlappyGame:
         if not self.game_over:
             self.started = True
             self.bird.velocity = FLAP_VELOCITY
+
+    def advance_bird(self):
+        if not self.started or self.game_over:
+            return
+        self.bird.velocity += GRAVITY
+        self.bird.y += self.bird.velocity
