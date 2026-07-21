@@ -52,3 +52,9 @@ class FlappyGame:
         if self.pipes[-1].x <= WIDTH - PIPE_SPACING:
             self.spawn_pipe(WIDTH)
         self.pipes = [pipe for pipe in self.pipes if pipe.x > -4]
+
+    def collides_with_pipe(self, pipe):
+        bird_x = self.bird.x
+        inside_x = pipe.x <= bird_x < pipe.x + 4
+        outside_gap = not (pipe.gap_y <= self.bird.y < pipe.gap_y + PIPE_GAP)
+        return inside_x and outside_gap
