@@ -43,3 +43,12 @@ class FlappyGame:
             return
         self.bird.velocity += GRAVITY
         self.bird.y += self.bird.velocity
+
+    def move_pipes(self):
+        if not self.started or self.game_over:
+            return
+        for pipe in self.pipes:
+            pipe.x -= 1
+        if self.pipes[-1].x <= WIDTH - PIPE_SPACING:
+            self.spawn_pipe(WIDTH)
+        self.pipes = [pipe for pipe in self.pipes if pipe.x > -4]
