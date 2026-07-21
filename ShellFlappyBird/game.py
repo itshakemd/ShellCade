@@ -58,3 +58,6 @@ class FlappyGame:
         inside_x = pipe.x <= bird_x < pipe.x + 4
         outside_gap = not (pipe.gap_y <= self.bird.y < pipe.gap_y + PIPE_GAP)
         return inside_x and outside_gap
+
+    def check_bounds(self):
+        return self.bird.y < 1 or self.bird.y >= GROUND_Y
