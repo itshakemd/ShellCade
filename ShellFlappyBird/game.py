@@ -77,3 +77,22 @@ class FlappyGame:
         self.resolve_scoring()
         if self.check_bounds() or any(self.collides_with_pipe(pipe) for pipe in self.pipes):
             self.game_over = True
+
+    def render(self):
+        rows = [[" "] * WIDTH for _ in range(HEIGHT)]
+        for pipe in self.pipes:
+            x = int(pipe.x)
+            if 0 <= x < WIDTH:
+                for y in range(1, GROUND_Y):
+                    if not (pipe.gap_y <= y < pipe.gap_y + PIPE_GAP):
+                        rows[y][x] = "#"
+                        if x + 1 < WIDTH:
+                            rows[y][x + 1] = "#"
+        bird_y = int(self.bird.y)
+        if 0 <= bird_y < HEIGHT:
+            rows[bird_y][self.bird.x] = "@"
+        rows[GROUND_Y] = ["="] * WIDTH
+        lines = ["SHELL FLAPPY BIRD".center(WIDTH),
+                 f"Score: {self.score}  Best: {self.best_score}".center(WIDTH)]
+        lines.extend("".join(row) for row in rows)
+        return "\n".join(lines)
