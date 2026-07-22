@@ -61,3 +61,10 @@ class FlappyGame:
 
     def check_bounds(self):
         return self.bird.y < 1 or self.bird.y >= GROUND_Y
+
+    def resolve_scoring(self):
+        for pipe in self.pipes:
+            if not pipe.scored and pipe.x + 4 < self.bird.x:
+                pipe.scored = True
+                self.score += 1
+                self.best_score = max(self.best_score, self.score)
