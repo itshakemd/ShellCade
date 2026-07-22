@@ -68,3 +68,12 @@ class FlappyGame:
                 pipe.scored = True
                 self.score += 1
                 self.best_score = max(self.best_score, self.score)
+
+    def tick(self):
+        if self.paused or self.game_over:
+            return
+        self.advance_bird()
+        self.move_pipes()
+        self.resolve_scoring()
+        if self.check_bounds() or any(self.collides_with_pipe(pipe) for pipe in self.pipes):
+            self.game_over = True
