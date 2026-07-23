@@ -19,6 +19,7 @@ class FlappyGame:
         self.game_over = False
         self.paused = False
         self.started = False
+        self.death_reason = ""
         self.spawn_pipe(WIDTH + 8)
 
     def spawn_pipe(self, x):
