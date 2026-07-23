@@ -15,3 +15,4 @@ class Pipe:
     x: float
     gap_y: int
     scored: bool = False
+    width: int = 4
