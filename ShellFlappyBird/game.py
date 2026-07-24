@@ -46,6 +46,7 @@ class FlappyGame:
         if not self.started or self.game_over:
             return
         self.bird.velocity += GRAVITY
+        self.bird.velocity = min(self.bird.velocity, 3.0)
         self.bird.y += self.bird.velocity
 
     def move_pipes(self):
