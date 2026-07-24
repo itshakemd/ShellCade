@@ -32,6 +32,16 @@ class FlappyGame:
             self.started = True
             self.bird.velocity = FLAP_VELOCITY
 
+    def restart(self):
+        self.bird = Bird(BIRD_X, BIRD_START_Y)
+        self.pipes = []
+        self.score = 0
+        self.game_over = False
+        self.paused = False
+        self.started = False
+        self.death_reason = ""
+        self.spawn_pipe(WIDTH + 8)
+
     def advance_bird(self):
         if not self.started or self.game_over:
             return
