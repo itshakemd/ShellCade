@@ -81,6 +81,10 @@ class FlappyGame:
         if self.check_bounds():
             self.death_reason = "You hit the ground or ceiling."
             self.game_over = True
+
+    @property
+    def next_pipe(self):
+        return next((pipe for pipe in self.pipes if pipe.x + pipe.width >= self.bird.x), None)
         elif any(self.collides_with_pipe(pipe) for pipe in self.pipes):
             self.death_reason = "You hit a pipe."
             self.game_over = True
