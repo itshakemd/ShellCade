@@ -34,3 +34,20 @@ def choose():
             return OPTIONS[selected]
         elif key in (b"q", b"Q", b"\x1b"):
             return "Quit"
+
+
+def show_instructions():
+    term = Terminal()
+    text = "\n".join([
+        "FLAPPY BIRD INSTRUCTIONS",
+        "-" * 32,
+        "SPACE or ENTER  flap",
+        "P               pause / resume",
+        "Q               quit to menu",
+        "",
+        "Fly through the gaps and avoid the pipes.",
+        "",
+        "Press any key to return",
+    ])
+    print(term.home + term.clear + term.bold_yellow(_center(text)))
+    msvcrt.getch()
