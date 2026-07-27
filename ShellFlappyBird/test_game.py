@@ -16,6 +16,12 @@ class FlappyTests(unittest.TestCase):
         self.assertFalse(game.started)
         self.assertEqual(game.bird.y, 12)
 
+    def test_flap_starts_game_and_sets_velocity(self):
+        game = FlappyGame(rng=FixedRandom())
+        game.flap()
+        self.assertTrue(game.started)
+        self.assertLess(game.bird.velocity, 0)
+
 
 if __name__ == "__main__":
     unittest.main()
