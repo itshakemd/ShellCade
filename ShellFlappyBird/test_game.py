@@ -22,6 +22,13 @@ class FlappyTests(unittest.TestCase):
         self.assertTrue(game.started)
         self.assertLess(game.bird.velocity, 0)
 
+    def test_gravity_moves_started_bird_down(self):
+        game = FlappyGame(rng=FixedRandom())
+        game.flap()
+        old_y = game.bird.y
+        game.tick()
+        self.assertNotEqual(game.bird.y, old_y)
+
 
 if __name__ == "__main__":
     unittest.main()
