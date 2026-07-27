@@ -29,6 +29,15 @@ class FlappyTests(unittest.TestCase):
         game.tick()
         self.assertNotEqual(game.bird.y, old_y)
 
+    def test_pipe_collision_ends_round(self):
+        game = FlappyGame(rng=FixedRandom())
+        game.flap()
+        pipe = game.pipes[0]
+        game.bird.x = int(pipe.x)
+        game.bird.y = 1
+        game.tick()
+        self.assertTrue(game.game_over)
+
 
 if __name__ == "__main__":
     unittest.main()
