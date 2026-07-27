@@ -38,6 +38,13 @@ class FlappyTests(unittest.TestCase):
         game.tick()
         self.assertTrue(game.game_over)
 
+    def test_ground_collision_ends_round(self):
+        game = FlappyGame(rng=FixedRandom())
+        game.started = True
+        game.bird.y = GROUND_Y
+        game.tick()
+        self.assertTrue(game.game_over)
+
 
 if __name__ == "__main__":
     unittest.main()
