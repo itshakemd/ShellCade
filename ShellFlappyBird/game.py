@@ -27,6 +27,9 @@ class FlappyGame:
         gap_y = self.rng.randint(margin, GROUND_Y - PIPE_GAP - margin)
         self.pipes.append(Pipe(x, gap_y))
 
+    def pipe_gap_center(self, pipe):
+        return pipe.gap_y + PIPE_GAP / 2
+
     def flap(self):
         if not self.game_over:
             self.started = True
