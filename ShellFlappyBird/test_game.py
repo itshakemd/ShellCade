@@ -45,6 +45,13 @@ class FlappyTests(unittest.TestCase):
         game.tick()
         self.assertTrue(game.game_over)
 
+    def test_scoring_marks_pipe_once(self):
+        game = FlappyGame(rng=FixedRandom())
+        game.pipes[0].x = game.bird.x - game.pipes[0].width - 1
+        game.resolve_scoring()
+        game.resolve_scoring()
+        self.assertEqual(game.score, 1)
+
 
 if __name__ == "__main__":
     unittest.main()
