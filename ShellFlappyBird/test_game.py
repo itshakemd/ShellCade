@@ -52,6 +52,16 @@ class FlappyTests(unittest.TestCase):
         game.resolve_scoring()
         self.assertEqual(game.score, 1)
 
+    def test_restart_returns_to_idle_state(self):
+        game = FlappyGame(rng=FixedRandom())
+        game.flap()
+        game.score = 4
+        game.game_over = True
+        game.restart()
+        self.assertFalse(game.started)
+        self.assertFalse(game.game_over)
+        self.assertEqual(game.score, 0)
+
 
 if __name__ == "__main__":
     unittest.main()
