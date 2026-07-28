@@ -62,6 +62,14 @@ class FlappyTests(unittest.TestCase):
         self.assertFalse(game.game_over)
         self.assertEqual(game.score, 0)
 
+    def test_pause_freezes_physics(self):
+        game = FlappyGame(rng=FixedRandom())
+        game.flap()
+        game.paused = True
+        position = game.bird.y
+        game.tick()
+        self.assertEqual(game.bird.y, position)
+
 
 if __name__ == "__main__":
     unittest.main()
