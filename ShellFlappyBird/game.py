@@ -57,7 +57,7 @@ class FlappyGame:
             return
         for pipe in self.pipes:
             pipe.x -= 1
-        if self.pipes[-1].x <= WIDTH - PIPE_SPACING:
+        if self.pipes and self.pipes[-1].x <= WIDTH - PIPE_SPACING:
             self.spawn_pipe(WIDTH)
         self.pipes = [pipe for pipe in self.pipes if pipe.x > -PIPE_WIDTH]
 
