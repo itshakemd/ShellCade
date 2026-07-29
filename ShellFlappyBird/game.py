@@ -107,7 +107,12 @@ class FlappyGame:
         if 0 <= bird_y < HEIGHT:
             rows[bird_y][self.bird.x] = "@"
         rows[GROUND_Y] = ["="] * WIDTH
+        status = "PRESS SPACE TO START" if not self.started else (
+            "GAME OVER - press SPACE to retry" if self.game_over else ""
+        )
         lines = ["SHELL FLAPPY BIRD".center(WIDTH),
                  f"Score: {self.score}  Best: {self.best_score}".center(WIDTH)]
+        if status:
+            lines.append(status.center(WIDTH))
         lines.extend("".join(row) for row in rows)
         return "\n".join(lines)
