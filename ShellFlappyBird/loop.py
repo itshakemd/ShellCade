@@ -17,6 +17,8 @@ def run_game(game):
             game.paused = not game.paused
         if b" " in keys or b"\r" in keys:
             game.flap()
+        if game.game_over and (b"r" in keys or b"R" in keys):
+            game.restart()
         game.tick()
         print(frame(term, game.render()))
         time.sleep(FRAME_DELAY)
