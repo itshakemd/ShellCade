@@ -42,6 +42,7 @@ def show_instructions():
         "FLAPPY BIRD INSTRUCTIONS",
         "-" * 32,
         "SPACE or ENTER  flap",
+        "R               restart after a crash",
         "P               pause / resume",
         "Q               quit to menu",
         "",
