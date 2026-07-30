@@ -23,6 +23,7 @@ terminal. Each game is self-contained in its own folder.
 | `ShellTetris` | Tetris | `python tetris.py` |
 | `ShellPong` | Pong | `python main.py` |
 | `ShellSpaceInvaders` | Space Invaders | `python main.py` |
+| `ShellFlappyBird` | Flappy Bird | `python main.py` |
 
 Open a game folder before running its command. Windows users can also launch
 the matching `.bat` file where provided.
