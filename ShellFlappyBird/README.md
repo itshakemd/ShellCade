@@ -13,3 +13,5 @@ launch `flappy.bat`.
 - `P` pause or resume
 - `R` restart after a crash
 - `Q` return to the menu
+
+Run the tests with `python -m unittest test_game.py`.
