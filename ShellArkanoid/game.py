@@ -30,6 +30,10 @@ class ArkanoidGame:
         self.game_over = False
         self.won = False
 
+    @property
+    def remaining_bricks(self) -> int:
+        return sum(brick.alive for brick in self.bricks)
+
     @staticmethod
     def _build_bricks() -> list[Brick]:
         bricks = []
