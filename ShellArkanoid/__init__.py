@@ -1,0 +1,1 @@
+"""Shellcade Arkanoid package."""
