@@ -13,7 +13,12 @@ class ArkanoidUI:
     def draw(self, game: ArkanoidGame) -> str:
         lines = [f" SCORE {game.score:05d}   LIVES {game.lives}   BRICKS {game.remaining_bricks:02d}"]
         lines.append("+" + "-" * BOARD_WIDTH + "+")
-        brick_map = {(brick.x, brick.y): brick for brick in game.bricks if brick.alive}
+        brick_map = {
+            (x, brick.y): brick
+            for brick in game.bricks
+            if brick.alive
+            for x in range(brick.x, brick.x + brick.width)
+        }
         for y in range(BOARD_HEIGHT):
             row = []
             for x in range(BOARD_WIDTH):
