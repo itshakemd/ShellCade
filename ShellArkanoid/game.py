@@ -60,6 +60,9 @@ class ArkanoidGame:
         if not self.game_over:
             self.paused = not self.paused
 
+    def restart(self) -> None:
+        self.__init__()
+
     def tick(self) -> None:
         if self.paused or self.game_over:
             return
