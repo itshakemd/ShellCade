@@ -23,7 +23,8 @@ class ArkanoidUI:
             row = []
             for x in range(BOARD_WIDTH):
                 if (x, y) in brick_map:
-                    row.append(self.term.on_color(4) + " " + self.term.normal)
+                    color = 1 + (brick_map[(x, y)].row % 6)
+                    row.append(self.term.on_color(color) + " " + self.term.normal)
                 elif y == PADDLE_ROW and game.paddle.x <= x <= game.paddle.right:
                     row.append(self.term.bold_cyan + "=" + self.term.normal)
                 elif (x, y) == (game.ball.x, game.ball.y):
