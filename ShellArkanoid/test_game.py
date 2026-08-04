@@ -34,6 +34,14 @@ class ArkanoidGameTests(unittest.TestCase):
         self.assertFalse(brick.alive)
         self.assertEqual(game.score, 50)
 
+    def test_missed_ball_costs_one_life_and_resets(self):
+        game = ArkanoidGame()
+        game.ball.y = 23
+        game.ball.dy = 1
+        game.tick()
+        self.assertEqual(game.lives, 2)
+        self.assertEqual((game.ball.x, game.ball.y), (38, 21))
+
 
 if __name__ == "__main__":
     unittest.main()
