@@ -25,7 +25,7 @@ def run_game(term: Terminal) -> ArkanoidGame:
             elif key == "p":
                 game.toggle_pause()
             elif key == "r" and game.game_over:
-                game = ArkanoidGame()
+                game.restart()
             game.tick()
             print(term.home + term.clear + ui.draw(game), end="", flush=True)
             time.sleep(TICK_SECONDS)
