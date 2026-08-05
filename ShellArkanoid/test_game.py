@@ -42,6 +42,13 @@ class ArkanoidGameTests(unittest.TestCase):
         self.assertEqual(game.lives, 2)
         self.assertEqual((game.ball.x, game.ball.y), (38, 21))
 
+    def test_pause_freezes_physics(self):
+        game = ArkanoidGame()
+        game.toggle_pause()
+        position = (game.ball.x, game.ball.y)
+        game.tick()
+        self.assertEqual(position, (game.ball.x, game.ball.y))
+
 
 if __name__ == "__main__":
     unittest.main()
