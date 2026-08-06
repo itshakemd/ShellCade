@@ -49,6 +49,14 @@ class ArkanoidGameTests(unittest.TestCase):
         game.tick()
         self.assertEqual(position, (game.ball.x, game.ball.y))
 
+    def test_ball_reflects_from_side_wall(self):
+        game = ArkanoidGame()
+        game.ball.x = 75
+        game.ball.dx = 1
+        game.ball.y = 20
+        game.tick()
+        self.assertEqual(game.ball.dx, -1)
+
 
 if __name__ == "__main__":
     unittest.main()
