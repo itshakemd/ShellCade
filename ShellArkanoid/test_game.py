@@ -57,6 +57,14 @@ class ArkanoidGameTests(unittest.TestCase):
         game.tick()
         self.assertEqual(game.ball.dx, -1)
 
+    def test_final_missed_ball_ends_round(self):
+        game = ArkanoidGame()
+        game.lives = 1
+        game.ball.y = 23
+        game.ball.dy = 1
+        game.tick()
+        self.assertTrue(game.game_over)
+
 
 if __name__ == "__main__":
     unittest.main()
