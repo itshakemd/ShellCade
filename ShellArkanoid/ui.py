@@ -10,6 +10,9 @@ class ArkanoidUI:
     def __init__(self, term: Terminal) -> None:
         self.term = term
 
+    def _brick_color(self, row: int) -> str:
+        return self.term.on_color(1 + row % 6)
+
     def draw(self, game: ArkanoidGame) -> str:
         lines = [f" SCORE {game.score:05d}   LIVES {game.lives}   BRICKS {game.remaining_bricks:02d}"]
         lines.append("+" + "-" * BOARD_WIDTH + "+")
@@ -23,8 +26,7 @@ class ArkanoidUI:
             row = []
             for x in range(BOARD_WIDTH):
                 if (x, y) in brick_map:
-                    color = 1 + (brick_map[(x, y)].row % 6)
-                    row.append(self.term.on_color(color) + " " + self.term.normal)
+                    row.append(self._brick_color(brick_map[(x, y)].row) + " " + self.term.normal)
                 elif y == PADDLE_ROW and game.paddle.x <= x <= game.paddle.right:
                     row.append(self.term.bold_cyan + "=" + self.term.normal)
                 elif (x, y) == (game.ball.x, game.ball.y):
