@@ -4,7 +4,7 @@ from ShellArkanoid.game import ArkanoidGame
 
 
 class ArkanoidGameTests(unittest.TestCase):
-    def test_starts_with_full_brick formation(self):
+    def test_starts_with_full_brick_formation(self):
         game = ArkanoidGame()
         self.assertEqual(game.remaining_bricks, 55)
         self.assertEqual(game.lives, 3)
