@@ -19,6 +19,9 @@ Windows users can double-click `arkanoid.bat`.
 - `R`: restart after a round ends
 - `Q`: quit
 
+Bricks in the upper rows are worth more points, and clearing the entire
+formation wins the round.
+
 ## Tests
 
 ```text
