@@ -65,6 +65,13 @@ class ArkanoidGameTests(unittest.TestCase):
         game.tick()
         self.assertTrue(game.game_over)
 
+    def test_restart_restores_round_state(self):
+        game = ArkanoidGame()
+        game.score = 100
+        game.lives = 1
+        game.restart()
+        self.assertEqual((game.score, game.lives, game.remaining_bricks), (0, 3, 55))
+
 
 if __name__ == "__main__":
     unittest.main()
