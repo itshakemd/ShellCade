@@ -3,12 +3,18 @@
 from blessed import Terminal
 
 from .loop import run_game
-from .menu import show_menu
+from .menu import choose, show_instructions
 
 
 def main() -> None:
     term = Terminal()
-    if show_menu(term):
+    while True:
+        choice = choose()
+        if choice == "Quit":
+            return
+        if choice == "Instructions":
+            show_instructions()
+            continue
         run_game(term)
 
 
