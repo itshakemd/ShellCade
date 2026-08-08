@@ -1,6 +1,7 @@
 import unittest
 
 from ShellArkanoid.game import ArkanoidGame
+from ShellArkanoid.input import ARROW_KEYS
 
 
 class ArkanoidGameTests(unittest.TestCase):
@@ -71,6 +72,9 @@ class ArkanoidGameTests(unittest.TestCase):
         game.lives = 1
         game.restart()
         self.assertEqual((game.score, game.lives, game.remaining_bricks), (0, 3, 55))
+
+    def test_windows_arrow_scan_codes_map_to_paddle_directions(self):
+        self.assertEqual(ARROW_KEYS, {"K": "left", "M": "right"})
 
 
 if __name__ == "__main__":
