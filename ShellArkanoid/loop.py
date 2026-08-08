@@ -16,16 +16,18 @@ def run_game(term: Terminal) -> ArkanoidGame:
     with term.fullscreen(), term.cbreak(), term.hidden_cursor():
         while True:
             key = read_key()
-            if key in ("q", "\x03"):
-                break
-            if key in ("a", "h", "KEY_LEFT"):
-                game.move_paddle(-2)
-            elif key in ("d", "l", "KEY_RIGHT"):
-                game.move_paddle(2)
-            elif key == "p":
-                game.toggle_pause()
-            elif key == "r" and game.game_over:
-                game.restart()
+            while key is not None:
+                if key in ("q", "\x03"):
+                    return game
+                if key in ("a", "h", "left"):
+                    game.move_paddle(-2)
+                elif key in ("d", "l", "right"):
+                    game.move_paddle(2)
+                elif key == "p":
+                    game.toggle_pause()
+                elif key == "r" and game.game_over:
+                    game.restart()
+                key = read_key()
             game.tick()
             print(term.home + term.clear + ui.draw(game), end="", flush=True)
             time.sleep(TICK_SECONDS)
