@@ -63,3 +63,21 @@ class PacmanGame:
 
     def restart(self) -> None:
         self.__init__()
+
+    def _move_ghosts(self) -> None:
+        for ghost in self.ghosts:
+            options = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+            valid = [
+                direction for direction in options
+                if not self.is_wall(ghost.x + direction[0], ghost.y + direction[1])
+            ]
+            if not valid:
+                continue
+            direction = min(
+                valid,
+                key=lambda item: abs(ghost.x + item[0] - self.pacman.x)
+                + abs(ghost.y + item[1] - self.pacman.y),
+            )
+            ghost.direction = direction
+            ghost.x += direction[0]
+            ghost.y += direction[1]
