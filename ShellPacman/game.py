@@ -7,6 +7,8 @@ from .constants import (
     GHOST_STARTS,
     HEIGHT,
     PELLET_SCORE,
+    POWER_PELLET_SCORE,
+    POWER_PELLETS,
     STARTING_LIVES,
     START_X,
     START_Y,
@@ -26,6 +28,8 @@ class PacmanGame:
             for x, cell in enumerate(row)
             if cell == "."
         }
+        self.power_pellets = set(POWER_PELLETS)
+        self.frightened_ticks = 0
         self.score = 0
         self.lives = STARTING_LIVES
         self.paused = False
@@ -51,11 +55,16 @@ class PacmanGame:
         if (self.pacman.x, self.pacman.y) in self.pellets:
             self.pellets.remove((self.pacman.x, self.pacman.y))
             self.score += PELLET_SCORE
+        if (self.pacman.x, self.pacman.y) in self.power_pellets:
+            self.power_pellets.remove((self.pacman.x, self.pacman.y))
+            self.score += POWER_PELLET_SCORE
+            self.frightened_ticks = 35
         if not self.pellets:
             self.won = True
             self.game_over = True
         self._move_ghosts()
         self._check_collisions()
+        self.frightened_ticks = max(0, self.frightened_ticks - 1)
 
     def toggle_pause(self) -> None:
         if not self.game_over:
