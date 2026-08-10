@@ -92,7 +92,13 @@ class PacmanGame:
             ghost.y += direction[1]
 
     def _check_collisions(self) -> None:
-        if any((ghost.x, ghost.y) == (self.pacman.x, self.pacman.y) for ghost in self.ghosts):
+        for ghost in self.ghosts:
+            if (ghost.x, ghost.y) != (self.pacman.x, self.pacman.y):
+                continue
+            if self.frightened_ticks:
+                ghost.x, ghost.y = GHOST_STARTS[0]
+                self.score += 200
+                continue
             self.lives -= 1
             if self.lives <= 0:
                 self.game_over = True
