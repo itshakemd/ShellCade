@@ -81,3 +81,13 @@ class PacmanGame:
             ghost.direction = direction
             ghost.x += direction[0]
             ghost.y += direction[1]
+
+    def _check_collisions(self) -> None:
+        if any((ghost.x, ghost.y) == (self.pacman.x, self.pacman.y) for ghost in self.ghosts):
+            self.lives -= 1
+            if self.lives <= 0:
+                self.game_over = True
+            else:
+                self.pacman = Actor(START_X, START_Y)
+                for ghost, (x, y) in zip(self.ghosts, GHOST_STARTS):
+                    ghost.x, ghost.y = x, y
