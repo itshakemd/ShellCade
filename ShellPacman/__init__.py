@@ -1,0 +1,1 @@
+"""Shellcade Pac-Man package."""
