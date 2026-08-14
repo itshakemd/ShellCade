@@ -39,6 +39,14 @@ class PacmanGameTests(unittest.TestCase):
         game.tick()
         self.assertEqual(position, (game.pacman.x, game.pacman.y))
 
+    def test_restart_restores_pacman_state(self):
+        game = PacmanGame()
+        game.score = 300
+        game.lives = 1
+        game.restart()
+        self.assertEqual(game.score, 0)
+        self.assertEqual(game.lives, 3)
+
 
 if __name__ == "__main__":
     unittest.main()
