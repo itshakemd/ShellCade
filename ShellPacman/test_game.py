@@ -16,6 +16,13 @@ class PacmanGameTests(unittest.TestCase):
         game.tick()
         self.assertEqual((game.pacman.x, game.pacman.y), (1, 1))
 
+    def test_pellet_increases_score(self):
+        game = PacmanGame()
+        game.pacman.x, game.pacman.y = 2, 1
+        game.set_direction((-1, 0))
+        game.tick()
+        self.assertEqual(game.score, 10)
+
 
 if __name__ == "__main__":
     unittest.main()
