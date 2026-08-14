@@ -31,6 +31,14 @@ class PacmanGameTests(unittest.TestCase):
         self.assertGreater(game.frightened_ticks, 0)
         self.assertEqual(game.score, 50)
 
+    def test_pause_freezes_pacman(self):
+        game = PacmanGame()
+        game.toggle_pause()
+        position = (game.pacman.x, game.pacman.y)
+        game.set_direction((1, 0))
+        game.tick()
+        self.assertEqual(position, (game.pacman.x, game.pacman.y))
+
 
 if __name__ == "__main__":
     unittest.main()
