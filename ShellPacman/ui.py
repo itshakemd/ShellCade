@@ -11,7 +11,7 @@ class PacmanUI:
         self.term = term
 
     def draw(self, game: PacmanGame) -> str:
-        lines = [f" SCORE {game.score:05d}   LIVES {game.lives}   PELLETS {len(game.pellets):03d}"]
+        lines = [f" SCORE {game.score:05d}   LIVES {game.lives}   DOTS {game.remaining_collectibles:03d}"]
         for y in range(HEIGHT):
             row = []
             for x in range(WIDTH):
