@@ -17,8 +17,9 @@ class PacmanUI:
             for x in range(WIDTH):
                 if (x, y) == (game.pacman.x, game.pacman.y):
                     row.append(self.term.bold_yellow + "C" + self.term.normal)
-                elif any((ghost.x, ghost.y) == (x, y) for ghost in game.ghosts):
-                    row.append(self.term.bold_red + "G" + self.term.normal)
+                elif (ghost := next((item for item in game.ghosts if (item.x, item.y) == (x, y)), None)):
+                    style = getattr(self.term, "bold_" + ghost.color, self.term.bold_red)
+                    row.append(style + ("g" if game.frightened_ticks else "G") + self.term.normal)
                 elif (x, y) in game.power_pellets:
                     row.append(self.term.bold_white + "o" + self.term.normal)
                 elif (x, y) in game.pellets:
