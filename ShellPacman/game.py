@@ -73,6 +73,10 @@ class PacmanGame:
     def restart(self) -> None:
         self.__init__()
 
+    @property
+    def remaining_collectibles(self) -> int:
+        return len(self.pellets) + len(self.power_pellets)
+
     def _move_ghosts(self) -> None:
         for ghost in self.ghosts:
             options = [(1, 0), (-1, 0), (0, 1), (0, -1)]
