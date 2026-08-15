@@ -47,6 +47,10 @@ class PacmanGameTests(unittest.TestCase):
         self.assertEqual(game.score, 0)
         self.assertEqual(game.lives, 3)
 
+    def test_ghosts_spawn_in_four_colors(self):
+        game = PacmanGame()
+        self.assertEqual([ghost.color for ghost in game.ghosts], ["red", "pink", "cyan", "orange"])
+
 
 if __name__ == "__main__":
     unittest.main()
