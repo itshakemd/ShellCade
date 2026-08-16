@@ -25,6 +25,7 @@ terminal. Each game is self-contained in its own folder.
 | `ShellSpaceInvaders` | Space Invaders | `python main.py` |
 | `ShellFlappyBird` | Flappy Bird | `python main.py` |
 | `ShellArkanoid` | Arkanoid | `python -m ShellArkanoid.main` |
+| `ShellPacman` | Pac-Man | `python -m ShellPacman` |
 
 Open a game folder before running its command. Windows users can also launch
 the matching `.bat` file where provided.
