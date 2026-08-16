@@ -51,6 +51,12 @@ class PacmanGameTests(unittest.TestCase):
         game = PacmanGame()
         self.assertEqual([ghost.color for ghost in game.ghosts], ["red", "pink", "cyan", "orange"])
 
+    def test_ghost_collision_costs_a_life(self):
+        game = PacmanGame()
+        game.ghosts[0].x, game.ghosts[0].y = game.pacman.x, game.pacman.y
+        game._check_collisions()
+        self.assertEqual(game.lives, 2)
+
 
 if __name__ == "__main__":
     unittest.main()
