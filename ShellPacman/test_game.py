@@ -57,6 +57,14 @@ class PacmanGameTests(unittest.TestCase):
         game._check_collisions()
         self.assertEqual(game.lives, 2)
 
+    def test_direction_is_buffered_until_path_opens(self):
+        game = PacmanGame()
+        game.pacman.x, game.pacman.y = 1, 1
+        game.pacman.direction = (0, 1)
+        game.set_direction((1, 0))
+        game.tick()
+        self.assertEqual(game.pacman.direction, (1, 0))
+
 
 if __name__ == "__main__":
     unittest.main()
