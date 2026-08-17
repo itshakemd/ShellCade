@@ -59,7 +59,7 @@ class PacmanGame:
             self.power_pellets.remove((self.pacman.x, self.pacman.y))
             self.score += POWER_PELLET_SCORE
             self.frightened_ticks = 35
-        if not self.pellets:
+        if not self.remaining_collectibles:
             self.won = True
             self.game_over = True
         self._move_ghosts()
