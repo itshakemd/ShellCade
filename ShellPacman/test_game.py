@@ -65,6 +65,14 @@ class PacmanGameTests(unittest.TestCase):
         game.tick()
         self.assertEqual(game.pacman.direction, (1, 0))
 
+    def test_frightened_collision_awards_bonus(self):
+        game = PacmanGame()
+        game.frightened_ticks = 5
+        game.ghosts[0].x, game.ghosts[0].y = game.pacman.x, game.pacman.y
+        game._check_collisions()
+        self.assertEqual(game.score, 200)
+        self.assertEqual(game.lives, 3)
+
 
 if __name__ == "__main__":
     unittest.main()
