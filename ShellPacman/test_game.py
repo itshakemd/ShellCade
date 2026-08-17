@@ -73,6 +73,13 @@ class PacmanGameTests(unittest.TestCase):
         self.assertEqual(game.score, 200)
         self.assertEqual(game.lives, 3)
 
+    def test_last_ghost_collision_ends_game(self):
+        game = PacmanGame()
+        game.lives = 1
+        game.ghosts[0].x, game.ghosts[0].y = game.pacman.x, game.pacman.y
+        game._check_collisions()
+        self.assertTrue(game.game_over)
+
 
 if __name__ == "__main__":
     unittest.main()
