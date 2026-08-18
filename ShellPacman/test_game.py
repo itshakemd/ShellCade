@@ -88,6 +88,12 @@ class PacmanGameTests(unittest.TestCase):
         self.assertTrue(game.won)
         self.assertTrue(game.game_over)
 
+    def test_ghosts_move_after_each_tick(self):
+        game = PacmanGame()
+        before = [(ghost.x, ghost.y) for ghost in game.ghosts]
+        game.tick()
+        self.assertNotEqual(before, [(ghost.x, ghost.y) for ghost in game.ghosts])
+
 
 if __name__ == "__main__":
     unittest.main()
