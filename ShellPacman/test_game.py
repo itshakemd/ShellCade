@@ -80,6 +80,14 @@ class PacmanGameTests(unittest.TestCase):
         game._check_collisions()
         self.assertTrue(game.game_over)
 
+    def test_empty_board_wins_round(self):
+        game = PacmanGame()
+        game.pellets.clear()
+        game.power_pellets.clear()
+        game.tick()
+        self.assertTrue(game.won)
+        self.assertTrue(game.game_over)
+
 
 if __name__ == "__main__":
     unittest.main()
