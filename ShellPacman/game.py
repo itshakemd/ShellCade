@@ -5,6 +5,7 @@ from __future__ import annotations
 from .constants import (
     BOARD,
     GHOST_STARTS,
+    GHOST_BONUS,
     HEIGHT,
     PELLET_SCORE,
     POWER_PELLET_SCORE,
@@ -101,7 +102,7 @@ class PacmanGame:
                 continue
             if self.frightened_ticks:
                 ghost.x, ghost.y = GHOST_STARTS[0]
-                self.score += 200
+                self.score += GHOST_BONUS
                 continue
             self.lives -= 1
             if self.lives <= 0:
