@@ -21,3 +21,6 @@ and `Q` to return to the menu.
 ```text
 python -m unittest ShellPacman.test_game
 ```
+
+Pellets are worth 10 points, power pellets are worth 50, and frightened ghosts
+are worth 200.
