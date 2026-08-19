@@ -1,6 +1,7 @@
 import unittest
 
 from ShellPacman.game import PacmanGame
+from ShellPacman.input import ARROW_KEYS
 
 
 class PacmanGameTests(unittest.TestCase):
@@ -87,6 +88,9 @@ class PacmanGameTests(unittest.TestCase):
         game.tick()
         self.assertTrue(game.won)
         self.assertTrue(game.game_over)
+
+    def test_arrow_key_mapping_is_complete(self):
+        self.assertEqual(set(ARROW_KEYS), {"H", "P", "K", "M"})
 
     def test_ghosts_move_after_each_tick(self):
         game = PacmanGame()
