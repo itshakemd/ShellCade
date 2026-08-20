@@ -10,6 +10,9 @@ class PacmanUI:
     def __init__(self, term: Terminal) -> None:
         self.term = term
 
+    def _actor_at(self, game: PacmanGame, x: int, y: int):
+        return next((ghost for ghost in game.ghosts if (ghost.x, ghost.y) == (x, y)), None)
+
     def draw(self, game: PacmanGame) -> str:
         lines = [f" SCORE {game.score:05d}   LIVES {game.lives}   DOTS {game.remaining_collectibles:03d}"]
         for y in range(HEIGHT):
@@ -17,7 +20,7 @@ class PacmanUI:
             for x in range(WIDTH):
                 if (x, y) == (game.pacman.x, game.pacman.y):
                     row.append(self.term.bold_yellow + "C" + self.term.normal)
-                elif (ghost := next((item for item in game.ghosts if (item.x, item.y) == (x, y)), None)):
+                elif (ghost := self._actor_at(game, x, y)):
                     style = getattr(self.term, "bold_" + ghost.color, self.term.bold_red)
                     row.append(style + ("g" if game.frightened_ticks else "G") + self.term.normal)
                 elif (x, y) in game.power_pellets:
