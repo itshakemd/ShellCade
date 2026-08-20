@@ -96,6 +96,12 @@ class PacmanGameTests(unittest.TestCase):
         game = PacmanGame()
         self.assertEqual(game.remaining_collectibles, len(game.pellets) + 4)
 
+    def test_frightened_state_property_tracks_timer(self):
+        game = PacmanGame()
+        self.assertFalse(game.ghosts_frightened)
+        game.frightened_ticks = 1
+        self.assertTrue(game.ghosts_frightened)
+
     def test_ghosts_move_after_each_tick(self):
         game = PacmanGame()
         before = [(ghost.x, ghost.y) for ghost in game.ghosts]
