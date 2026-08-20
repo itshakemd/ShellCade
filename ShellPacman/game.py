@@ -78,6 +78,10 @@ class PacmanGame:
     def remaining_collectibles(self) -> int:
         return len(self.pellets) + len(self.power_pellets)
 
+    @property
+    def ghosts_frightened(self) -> bool:
+        return self.frightened_ticks > 0
+
     def _move_ghosts(self) -> None:
         for ghost in self.ghosts:
             options = [(1, 0), (-1, 0), (0, 1), (0, -1)]
