@@ -92,6 +92,10 @@ class PacmanGameTests(unittest.TestCase):
     def test_arrow_key_mapping_is_complete(self):
         self.assertEqual(set(ARROW_KEYS), {"H", "P", "K", "M"})
 
+    def test_collectible_count_includes_power_pellets(self):
+        game = PacmanGame()
+        self.assertEqual(game.remaining_collectibles, len(game.pellets) + 4)
+
     def test_ghosts_move_after_each_tick(self):
         game = PacmanGame()
         before = [(ghost.x, ghost.y) for ghost in game.ghosts]
