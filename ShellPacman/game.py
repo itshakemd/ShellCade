@@ -30,6 +30,7 @@ class PacmanGame:
             if cell == "."
         }
         self.power_pellets = set(POWER_PELLETS)
+        self.pellets.difference_update(self.power_pellets)
         self.frightened_ticks = 0
         self.score = 0
         self.lives = STARTING_LIVES
