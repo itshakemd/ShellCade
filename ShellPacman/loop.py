@@ -10,7 +10,16 @@ from .input import read_key
 from .ui import PacmanUI
 
 
-DIRECTIONS = {"up": (0, -1), "down": (0, 1), "left": (-1, 0), "right": (1, 0)}
+DIRECTIONS = {
+    "up": (0, -1),
+    "w": (0, -1),
+    "down": (0, 1),
+    "s": (0, 1),
+    "left": (-1, 0),
+    "a": (-1, 0),
+    "right": (1, 0),
+    "d": (1, 0),
+}
 
 
 def run_game(term: Terminal) -> PacmanGame:
