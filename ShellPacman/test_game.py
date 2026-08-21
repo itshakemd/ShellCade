@@ -2,6 +2,7 @@ import unittest
 
 from ShellPacman.game import PacmanGame
 from ShellPacman.input import ARROW_KEYS
+from ShellPacman.loop import DIRECTIONS
 
 
 class PacmanGameTests(unittest.TestCase):
@@ -101,6 +102,12 @@ class PacmanGameTests(unittest.TestCase):
         self.assertFalse(game.ghosts_frightened)
         game.frightened_ticks = 1
         self.assertTrue(game.ghosts_frightened)
+
+    def test_wasd_keys_map_to_movement_directions(self):
+        self.assertEqual(DIRECTIONS["w"], (0, -1))
+        self.assertEqual(DIRECTIONS["a"], (-1, 0))
+        self.assertEqual(DIRECTIONS["s"], (0, 1))
+        self.assertEqual(DIRECTIONS["d"], (1, 0))
 
     def test_ghosts_move_after_each_tick(self):
         game = PacmanGame()
