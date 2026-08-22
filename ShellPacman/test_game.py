@@ -3,6 +3,7 @@ import unittest
 from ShellPacman.game import PacmanGame
 from ShellPacman.input import ARROW_KEYS
 from ShellPacman.loop import DIRECTIONS
+from ShellPacman.ui import PacmanUI
 
 
 class PacmanGameTests(unittest.TestCase):
@@ -114,6 +115,10 @@ class PacmanGameTests(unittest.TestCase):
         before = [(ghost.x, ghost.y) for ghost in game.ghosts]
         game.tick()
         self.assertNotEqual(before, [(ghost.x, ghost.y) for ghost in game.ghosts])
+
+    def test_board_block_is_centered(self):
+        centered = PacmanUI._center_block("board", 80, 24)
+        self.assertTrue(centered.startswith("\n" * 9 + " " * 29))
 
 
 if __name__ == "__main__":
