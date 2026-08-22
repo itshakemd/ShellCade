@@ -1,5 +1,7 @@
 """Blessed Pac-Man board renderer."""
 
+import shutil
+
 from blessed import Terminal
 
 from .constants import BOARD, HEIGHT, WIDTH
@@ -12,6 +14,15 @@ class PacmanUI:
 
     def _actor_at(self, game: PacmanGame, x: int, y: int):
         return next((ghost for ghost in game.ghosts if (ghost.x, ghost.y) == (x, y)), None)
+
+    @staticmethod
+    def _center_block(text: str, columns: int, rows: int) -> str:
+        lines = text.splitlines()
+        left_padding = max(0, (columns - WIDTH) // 2)
+        top_padding = max(0, (rows - len(lines)) // 2)
+        return "\n" * top_padding + "\n".join(
+            " " * left_padding + line for line in lines
+        )
 
     def draw(self, game: PacmanGame) -> str:
         lines = [f" SCORE {game.score:05d}   LIVES {game.lives}   DOTS {game.remaining_collectibles:03d}"]
@@ -34,4 +45,5 @@ class PacmanUI:
             lines.append("PAUSED - press P to resume")
         elif game.game_over:
             lines.append("YOU WIN!" if game.won else "GAME OVER - press R to restart")
-        return "\n".join(lines)
+        columns, rows = shutil.get_terminal_size((80, 24))
+        return self._center_block("\n".join(lines), columns, rows)
