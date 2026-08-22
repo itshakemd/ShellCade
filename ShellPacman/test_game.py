@@ -118,7 +118,7 @@ class PacmanGameTests(unittest.TestCase):
 
     def test_board_block_is_centered(self):
         centered = PacmanUI._center_block("board", 80, 24)
-        self.assertTrue(centered.startswith("\n" * 9 + " " * 29))
+        self.assertTrue(centered.startswith("\n" * 11 + " " * 29))
 
 
 if __name__ == "__main__":
