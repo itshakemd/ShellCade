@@ -22,6 +22,12 @@ class TicTacToeTests(unittest.TestCase):
         game.current = "O"
         self.assertEqual(choose_move(game), 2)
 
+    def test_full_board_is_draw(self):
+        game = TicTacToeGame()
+        for move in (0, 1, 2, 4, 3, 5, 7, 6, 8):
+            game.play(move)
+        self.assertTrue(game.draw)
+
 
 if __name__ == "__main__":
     unittest.main()
