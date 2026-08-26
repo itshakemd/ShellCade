@@ -4,6 +4,8 @@ from .game import TicTacToeGame
 
 
 def choose_move(game: TicTacToeGame) -> int:
+    if not game.available_moves():
+        raise ValueError("AI cannot move on a full board")
     for move in game.available_moves():
         trial = TicTacToeGame()
         trial.board = game.board.copy()
