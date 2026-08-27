@@ -13,6 +13,13 @@ def choose_move(game: TicTacToeGame) -> int:
         trial.play(move)
         if trial.winner == "O":
             return move
+    for move in game.available_moves():
+        trial = TicTacToeGame()
+        trial.board = game.board.copy()
+        trial.current = "X"
+        trial.play(move)
+        if trial.winner == "X":
+            return move
     if 4 in game.available_moves():
         return 4
     return game.available_moves()[0]
