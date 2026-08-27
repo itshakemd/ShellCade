@@ -36,3 +36,6 @@ class TicTacToeGame:
 
     def available_moves(self) -> list[int]:
         return [index for index, value in enumerate(self.board) if value == " "]
+
+    def reset(self) -> None:
+        self.__init__()
