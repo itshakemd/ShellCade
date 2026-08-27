@@ -28,6 +28,13 @@ class TicTacToeTests(unittest.TestCase):
             game.play(move)
         self.assertTrue(game.draw)
 
+    def test_reset_clears_match(self):
+        game = TicTacToeGame()
+        game.play(0)
+        game.reset()
+        self.assertEqual(game.board, [" "] * 9)
+        self.assertEqual(game.current, "X")
+
 
 if __name__ == "__main__":
     unittest.main()
