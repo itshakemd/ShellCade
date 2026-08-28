@@ -7,11 +7,19 @@ class TicTacToeUI:
     def __init__(self, term: Terminal) -> None:
         self.term = term
 
+    @staticmethod
+    def position_label(index: int) -> str:
+        return str(index + 1)
+
     def draw(self, game, single_player: bool) -> str:
         lines = ["TIC-TAC-TOE", f"Mode: {'Single Player' if single_player else 'Two Players'}",
                  f"Turn: {game.current}", ""]
         for row in range(3):
-            cells = [game.board[row * 3 + column] for column in range(3)]
+            cells = [
+                game.board[row * 3 + column] if game.board[row * 3 + column] != " "
+                else self.position_label(row * 3 + column)
+                for column in range(3)
+            ]
             lines.append(f" {cells[0]} | {cells[1]} | {cells[2]} ")
             if row < 2:
                 lines.append("---+---+---")
