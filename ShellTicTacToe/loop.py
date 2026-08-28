@@ -24,5 +24,5 @@ def run_game(term: Terminal, single_player: bool) -> None:
                 game.play(int(key) - 1)
             if single_player and game.current == "O" and not game.finished:
                 game.play(choose_move(game))
-            print(term.home + term.clear + term.center(ui.draw(game, single_player)), end="", flush=True)
+            print(term.home + term.clear + ui.draw(game, single_player), end="", flush=True)
             time.sleep(0.05)
