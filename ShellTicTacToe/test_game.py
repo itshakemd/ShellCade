@@ -2,6 +2,7 @@ import unittest
 
 from ShellTicTacToe.ai import choose_move
 from ShellTicTacToe.game import TicTacToeGame
+from ShellTicTacToe.ui import TicTacToeUI
 
 
 class TicTacToeTests(unittest.TestCase):
@@ -40,6 +41,10 @@ class TicTacToeTests(unittest.TestCase):
         game.reset()
         self.assertEqual(game.board, [" "] * 9)
         self.assertEqual(game.current, "X")
+
+    def test_board_block_is_centered(self):
+        centered = TicTacToeUI.center_block("board", 80, 24)
+        self.assertTrue(centered.startswith("\n" * 11 + " " * 37))
 
 
 if __name__ == "__main__":
